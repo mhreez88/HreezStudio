@@ -41,7 +41,7 @@
             cursor: none;
         }
 
-        /* === خلفية Canvas الكونية (Warp Speed) === */
+        /* === خلفية Canvas الكونية === */
         #cosmic-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -130,15 +130,24 @@
             font-size: 1.1rem; margin-bottom: 40px; line-height: 1.9; color: var(--text-muted); max-width: 550px;
         }
 
-        /* === الأزرار === */
-        .btn-group { display: flex; gap: 20px; flex-wrap: wrap; }
+        /* ========================================== */
+        /* === الأزرار (معدلة للموبايل) === */
+        /* ========================================== */
+        .btn-group { 
+            display: flex; 
+            gap: 15px; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+        }
         
         .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-            padding: 16px 40px; border-radius: 50px; text-decoration: none;
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 15px 30px; border-radius: 50px; text-decoration: none;
             font-weight: 700; font-size: 1rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer; border: none; position: relative; overflow: hidden;
             letter-spacing: 1px;
+            flex: 1; /* ياخد مساحة متساوية */
+            min-width: 140px; /* أقل عرض عشان ميبقاش صغير أوي */
         }
         
         .btn-primary {
@@ -307,7 +316,7 @@
         .glass-card p { color: var(--text-muted); line-height: 1.8; font-size: 0.95rem; }
 
         /* ========================================== */
-        /* === مختبر الإعلانات (الشقوق الزجاجية) === */
+        /* === مختبر الإعلانات === */
         /* ========================================== */
         .lab-container {
             background: rgba(0, 0, 0, 0.6);
@@ -464,7 +473,7 @@
         .stat-item p { color: var(--text-muted); font-size: 1rem; font-weight: 600; letter-spacing: 1px; }
 
         /* ========================================== */
-        /* === آراء العملاء (Testimonials) === */
+        /* === آراء العملاء === */
         /* ========================================== */
         .testimonials-grid {
             display: grid;
@@ -558,7 +567,6 @@
         
         .contact-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; position: relative; z-index: 2; }
         
-        /* ✅ أيقونات السوشيال ميديا جنب بعضها */
         .social-icons-wrap {
             display: flex !important;
             flex-direction: row !important;
@@ -582,7 +590,6 @@
             transform: translateY(-5px);
         }
 
-        /* زر الواتساب العائم */
         .floating-wa {
             position: fixed; bottom: 30px; right: 30px;
             width: 65px; height: 65px; border-radius: 50%;
@@ -598,7 +605,6 @@
             100% { box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
         }
 
-        /* === التأثير الصوتي البصري === */
         .sound-wave {
             position: fixed;
             border: 2px solid var(--gold);
@@ -634,7 +640,19 @@
             .stats-grid { gap: 30px; }
             .stat-item h3 { font-size: 2.5rem; }
             
-            /* ✅ في الموبايل: الأزرار الأساسية تبقى تحت بعضها، لكن السوشيال تفضل جنب بعضها */
+            /* ✅ الأزرار الأساسية في الموبايل */
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+                gap: 12px;
+            }
+            .btn {
+                width: 100%;
+                padding: 16px 20px;
+                font-size: 1.05rem;
+                flex: none;
+            }
+            
             .contact-buttons { flex-direction: column; align-items: center; }
             
             .social-icons-wrap {
@@ -645,20 +663,20 @@
             
             .testimonials-grid { grid-template-columns: 1fr; }
         }
+
+        /* === للشاشات الصغيرة جداً === */
+        @media (max-width: 400px) {
+            .hero-text h1 { font-size: 2rem; }
+            .btn { font-size: 0.95rem; padding: 14px 16px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- مؤشر الماوس المخصص -->
     <div class="cursor" id="customCursor"></div>
-
-    <!-- خلفية Canvas الكونية -->
     <canvas id="cosmic-canvas"></canvas>
-
-    <!-- شريط التقدم -->
     <div id="progress-bar"></div>
 
-    <!-- زر الواتساب العائم -->
     <a href="https://wa.me/201008989072" target="_blank" class="floating-wa" aria-label="تواصل عبر واتساب">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -798,13 +816,12 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 6. آراء العملاء (Testimonials) -->
+    <!-- 6. آراء العملاء -->
     <!-- ========================================== -->
     <section id="testimonials">
         <h2 class="section-title reveal">آراء <span style="color: var(--gold);">العملاء</span></h2>
         <div class="testimonials-grid">
             
-            <!-- رأي 1 -->
             <div class="testimonial-card reveal">
                 <i class="fas fa-quote-right testimonial-quote-icon"></i>
                 <p class="testimonial-text">"محمد غيّر نظرتي تماماً للإعلانات. كنت بصرف فلوس كتير من غير نتيجة، ومن أول شهر معاه الـ ROAS بتاعي تعدى 4x. شغل احترافي بجد."</p>
@@ -819,7 +836,6 @@
                 </div>
             </div>
 
-            <!-- رأي 2 -->
             <div class="testimonial-card reveal">
                 <i class="fas fa-quote-right testimonial-quote-icon"></i>
                 <p class="testimonial-text">"التدريب الشخصي (One-to-One) مع محمد كان أفضل استثمار عملته. شرح لي اختيار المنتج، تحليل البيانات، والاسكيل ببساطة وبعمق. دلوقتي بعمل حملاتي بنفسي وبنجح."</p>
@@ -834,7 +850,6 @@
                 </div>
             </div>
 
-            <!-- رأي 3 -->
             <div class="testimonial-card reveal">
                 <i class="fas fa-quote-right testimonial-quote-icon"></i>
                 <p class="testimonial-text">"أنا بشتغل مع محمد من 2023، ومن ساعتها حملاتي على فيسبوك وتيك توك بتجيب عملاء حقيقيين مش مجرد لايكات. الراجل ده بيفهم في البيانات بجد."</p>
@@ -853,24 +868,22 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 7. التواصل (Call to Action) -->
+    <!-- 7. التواصل -->
     <!-- ========================================== -->
     <section id="contact">
         <div class="contact-section reveal">
             <h2>جاهز تنقل براندك لمستوى تاني؟</h2>
             <p>لو عايز إعلانات بتجيب أرباح حقيقية، أو محتاج تدريب شخصي يخليك محترف.. تواصل معي دلوقتي.</p>
             
-            <!-- أزرار الواتساب والإيميل (بتنزل تحت بعضها في الموبايل) -->
             <div class="contact-buttons" style="margin-bottom: 30px;">
-                <a href="https://wa.me/201008989072" target="_blank" class="btn btn-primary" style="background: #25d366; color: white;">
+                <a href="https://wa.me/201008989072" target="_blank" class="btn btn-primary" style="background: #25d366; color: white; flex: none; min-width: 200px;">
                     <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> واتساب
                 </a>
-                <a href="mailto:mhreez88@gmail.com" class="btn btn-outline">
+                <a href="mailto:mhreez88@gmail.com" class="btn btn-outline" style="flex: none; min-width: 200px;">
                     <i class="fas fa-envelope"></i> إيميل
                 </a>
             </div>
             
-            <!-- ✅ أيقونات السوشيال (جنب بعضها دايماً) -->
             <div class="contact-buttons social-icons-wrap">
                 <a href="https://www.facebook.com/share/1EysgMxxCS/" target="_blank" class="btn-social"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://tiktok.com/@hreezstudio" target="_blank" class="btn-social"><i class="fab fa-tiktok"></i></a>
@@ -900,7 +913,6 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
 
-        // الموجات الصوتية البصرية
         document.addEventListener('click', (e) => {
             const wave = document.createElement('div');
             wave.classList.add('sound-wave');
@@ -911,7 +923,7 @@
         });
 
         /* ========================================== */
-        /* 2. خلفية Canvas الكونية (Warp Speed) */
+        /* 2. خلفية Canvas الكونية */
         /* ========================================== */
         const canvas = document.getElementById('cosmic-canvas');
         const ctx = canvas.getContext('2d');
