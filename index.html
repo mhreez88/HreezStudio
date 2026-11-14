@@ -3,428 +3,544 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محمد حريز | خبير ميديا باينج وتسويق إلكتروني</title>
-    <meta name="description" content="محمد حريز (Hreez Studio)، خبير في الميديا باينج، التجارة الإلكترونية والدروب شيبينج. خبرة منذ 2022. شريك نجاحك للوصول للريادة.">
+    <title>محمد حريز | The Cosmic Media Buyer</title>
+    <meta name="description" content="محمد حريز (Hreez Studio)، خبير ميديا باينج. تجربة تسويقية من المستقبل.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
     <style>
-        /* === الإعدادات === */
+        /* ========================================== */
+        /* === الإعدادات والكون الأساسي === */
+        /* ========================================== */
         :root {
-            --bg-dark: #020205;
-            --gold: #d4af37;
-            --gold-glow: rgba(212, 175, 55, 0.6);
-            --green: #25d366;
-            --green-glow: rgba(37, 211, 102, 0.6);
+            --bg-deep: #010008;
+            --gold: #ffd700;
+            --gold-dim: rgba(255, 215, 0, 0.4);
+            --cyan: #00f3ff;
+            --cyan-dim: rgba(0, 243, 255, 0.4);
+            --purple: #9d00ff;
             --text-main: #ffffff;
-            --text-muted: #b0b0c0;
+            --text-muted: #8a8a9a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         html { scroll-behavior: smooth; }
-
+        
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-deep);
             color: var(--text-main);
             overflow-x: hidden;
             position: relative;
+            cursor: none; /* إخفاء المؤشر الأصلي */
         }
 
-        /* === خلفية الفضاء === */
-        .space-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-            overflow: hidden;
+        /* === خلفية Canvas الكونية === */
+        #cosmic-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        .stars {
-            width: 2px; height: 2px; background: transparent;
-            box-shadow: 
-                100px 200px #fff, 500px 800px #fff, 300px 400px #fff, 700px 100px #fff, 
-                200px 600px #fff, 800px 500px #fff, 400px 900px #fff, 900px 300px #fff;
-            position: absolute; top: 0; left: 0;
-            animation: twinkle 4s infinite alternate;
+        /* === المؤشر المخصص === */
+        .cursor {
+            position: fixed;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--gold);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 20px var(--gold), 0 0 40px var(--gold-dim);
+            mix-blend-mode: screen;
         }
-
-        @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 1; } }
+        .cursor.hover {
+            width: 60px; height: 60px;
+            background: transparent;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 30px var(--gold), inset 0 0 30px var(--gold-dim);
+        }
+        .cursor::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 5px; height: 5px;
+            background: #fff;
+            border-radius: 50%;
+        }
 
         /* === شريط التقدم === */
         #progress-bar {
-            position: fixed; top: 0; left: 0; height: 4px;
-            background: var(--gold); width: 0%; z-index: 1000;
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--cyan), var(--purple));
+            width: 0%; z-index: 1000;
             box-shadow: 0 0 15px var(--gold);
         }
 
-        /* ========================================== */
-        /* === تأثير الظهور الموحد والجميل لكل سيكشن === */
-        /* ========================================== */
-        .section-reveal {
+        /* === تأثير الظهور === */
+        .reveal {
             opacity: 0;
             transform: translateY(60px) scale(0.95);
-            transition: opacity 1s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                        transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .section-reveal.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
 
-        /* === القسم الرئيسي === */
+        /* ========================================== */
+        /* === القسم الرئيسي (Hero) === */
+        /* ========================================== */
         header {
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            padding: 40px 20px; perspective: 1000px;
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            perspective: 1500px;
         }
 
         .hero-content {
             display: flex; align-items: center; justify-content: space-between;
-            max-width: 1100px; width: 100%; gap: 40px; transform-style: preserve-3d;
+            max-width: 1200px; width: 100%; gap: 60px;
+            transform-style: preserve-3d;
         }
 
-        .hero-text { flex: 1; z-index: 2; }
+        .hero-text { flex: 1.2; z-index: 2; }
 
         .hero-text h1 {
-            font-size: 3.5rem; font-weight: 900; margin-bottom: 10px; line-height: 1.2;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.3);
-            transform: translateZ(50px);
+            font-size: 3.5rem; font-weight: 900; margin-bottom: 15px; line-height: 1.2;
+            background: linear-gradient(135deg, #fff 0%, var(--gold) 50%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px var(--gold-dim);
+            min-height: 4.2rem;
         }
         .hero-text h1 span { color: var(--gold); }
         
         .hero-text h2 {
-            font-size: 1.5rem; color: var(--text-muted); margin-bottom: 25px; font-weight: 600;
-            transform: translateZ(30px);
+            font-size: 1.3rem; color: var(--cyan); margin-bottom: 25px; font-weight: 300;
+            letter-spacing: 2px; text-transform: uppercase;
         }
         .hero-text p {
-            font-size: 1.1rem; margin-bottom: 35px; line-height: 1.8; color: #ccc; max-width: 500px;
-            transform: translateZ(20px);
+            font-size: 1.1rem; margin-bottom: 40px; line-height: 1.9; color: var(--text-muted); max-width: 550px;
         }
-
-        /* === حاوية الصورة === */
-        .hero-image {
-            flex: 1; display: flex; justify-content: center; align-items: center;
-            position: relative; width: 300px; height: 300px;
-            min-width: 300px; min-height: 300px;
-            transform: none; animation: none;
-        }
-
-        .hero-image img {
-            width: calc(300px - 4px); height: calc(300px - 4px);
-            border-radius: 30px; object-fit: cover; 
-            border: 2px solid rgba(212, 175, 55, 0.5);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 40px rgba(212, 175, 55, 0.3);
-            transform: none; animation: none; transition: none;
-            box-sizing: border-box;
-        }
-
-        .hero-image::before {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            background: var(--gold); border-radius: 50%; filter: blur(80px);
-            opacity: 0.4; z-index: 1; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulse 4s infinite alternate;
-        }
-
-        @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.2; } 100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; } }
 
         /* === الأزرار === */
+        .btn-group { display: flex; gap: 20px; flex-wrap: wrap; }
+        
         .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            padding: 15px 35px; border-radius: 50px; text-decoration: none;
-            font-weight: 700; font-size: 1.1rem; transition: all 0.4s ease; cursor: pointer; border: none;
-            transform: translateZ(40px);
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 16px 40px; border-radius: 50px; text-decoration: none;
+            font-weight: 700; font-size: 1rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer; border: none; position: relative; overflow: hidden;
+            letter-spacing: 1px;
         }
-        .btn-primary { background: var(--gold); color: #000; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4); }
-        .btn-primary:hover { transform: translateZ(50px) scale(1.05); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.6); }
-        .btn-outline { background: transparent; color: var(--gold); border: 2px solid var(--gold); }
-        .btn-outline:hover { background: var(--gold); color: #000; transform: translateZ(50px) scale(1.05); }
-
-        /* === تنسيق عام للسيكشنات === */
-        .section-wrapper {
-            padding: 60px 20px;
-            max-width: 1100px;
-            margin: 0 auto;
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), #ffaa00);
+            color: #000;
+            box-shadow: 0 0 30px var(--gold-dim), inset 0 0 20px rgba(255,255,255,0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 50px var(--gold), 0 0 80px var(--gold-dim);
+        }
+        
+        .btn-outline {
+            background: transparent; color: var(--cyan);
+            border: 2px solid var(--cyan);
+            box-shadow: 0 0 20px var(--cyan-dim), inset 0 0 20px var(--cyan-dim);
+        }
+        .btn-outline:hover {
+            background: var(--cyan); color: #000;
+            box-shadow: 0 0 50px var(--cyan);
+            transform: translateY(-5px) scale(1.02);
         }
 
+        /* === الصورة في الكرة البلورية === */
+        .hero-image-container {
+            flex: 0.8;
+            display: flex; justify-content: center; align-items: center;
+            position: relative;
+            width: 380px; height: 380px;
+            perspective: 1000px;
+        }
+
+        .orb {
+            position: relative;
+            width: 320px; height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), rgba(0,0,0,0.8));
+            box-shadow: 
+                0 0 60px var(--gold-dim),
+                0 0 120px var(--cyan-dim),
+                inset 0 0 60px rgba(0,0,0,0.8),
+                inset 0 0 20px rgba(255,255,255,0.2);
+            transform-style: preserve-3d;
+            animation: orbFloat 8s ease-in-out infinite;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .orb::before {
+            content: '';
+            position: absolute; top: 5%; left: 10%;
+            width: 80%; height: 30%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.4), transparent);
+            border-radius: 50%;
+            filter: blur(10px);
+            z-index: 3;
+        }
+
+        .orb img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: brightness(1.1) contrast(1.1);
+            opacity: 0.9;
+            position: relative; z-index: 2;
+        }
+
+        .orb-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 120%; height: 120%;
+            border-radius: 50%;
+            border: 1px solid var(--cyan-dim);
+            transform: translate(-50%, -50%) rotateX(75deg);
+            animation: ringSpin 12s linear infinite;
+            z-index: 0;
+        }
+        .orb-ring:nth-child(2) {
+            width: 140%; height: 140%;
+            border-color: var(--gold-dim);
+            animation-duration: 18s;
+            animation-direction: reverse;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translateY(0) rotateY(0deg); }
+            50% { transform: translateY(-20px) rotateY(10deg); }
+        }
+        @keyframes ringSpin {
+            0% { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg); }
+            100% { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(360deg); }
+        }
+
+        /* === تنسيق الأقسام العامة === */
+        section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
+        
         .section-title {
-            text-align: center; font-size: 2.5rem; font-weight: 900; margin-bottom: 50px;
-            text-shadow: 0 0 15px rgba(255,255,255,0.1);
+            text-align: center; font-size: 2.5rem; font-weight: 900; margin-bottom: 60px;
+            background: linear-gradient(135deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
         }
-        .section-title span { color: var(--gold); }
+        .section-title::after {
+            content: '';
+            display: block; width: 80px; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
 
-        /* === قسم ليه تختارني === */
-        .why-me-section { perspective: 1000px; }
-        .why-me-box {
-            background: rgba(20, 20, 30, 0.6); border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 30px; padding: 40px 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 30px rgba(212,175,55,0.05);
-            transform-style: preserve-3d; position: relative;
+        /* ========================================== */
+        /* === كروت الخدمات الزجاجية === */
+        /* ========================================== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+            opacity: 0; transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .glass-card:hover::before { opacity: 1; }
+        .glass-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold-dim);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px var(--gold-dim);
+        }
+
+        .glass-card i {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--gold), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            display: inline-block;
+            text-shadow: 0 0 20px var(--gold-dim);
+        }
+        .glass-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: #fff; }
+        .glass-card p { color: var(--text-muted); line-height: 1.8; font-size: 0.95rem; }
+
+        /* ========================================== */
+        /* === مختبر الإعلانات (Hologram) === */
+        /* ========================================== */
+        .lab-container {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 50px 30px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
             text-align: center;
         }
-        .why-me-box p {
-            font-size: 1.2rem; line-height: 1.8; color: #e0e0e0; font-weight: 600;
-            transform: translateZ(30px); margin-bottom: 20px;
-        }
-        .why-me-box p span.highlight { color: var(--gold); font-weight: 900; }
-        
-        .why-icons {
-            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px;
-        }
-        .why-icon-item {
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
-            transform: translateZ(40px);
-        }
-        .why-icon-item i {
-            font-size: 2.5rem; color: var(--gold); text-shadow: 0 0 15px var(--gold-glow);
-        }
-        .why-icon-item span {
-            font-size: 0.9rem; color: var(--text-muted); font-weight: 600;
+
+        .lab-container::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 243, 255, 0.05), rgba(0, 243, 255, 0.05) 2px, transparent 2px, transparent 6px);
+            pointer-events: none;
+            z-index: 5;
         }
 
-        /* ========================================== */
-        /* === الخدمات (أنيميشن احترافي) === */
-        /* ========================================== */
-        .services-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 30px; 
-            transform-style: preserve-3d; 
-            max-width: 1000px; 
-            margin: 0 auto; 
-        }
-        
-        .service-card {
-            background: rgba(20, 20, 30, 0.8); padding: 40px 30px; border-radius: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(10px);
-            position: relative; transform-style: preserve-3d;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            cursor: pointer;
-            
-            /* تأثير الظهور الاحترافي */
-            opacity: 0;
-            transform: perspective(1000px) rotateX(-15deg) translateY(50px) scale(0.9);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        .service-card.active {
-            opacity: 1;
-            transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
-        }
-
-        .service-card i, .service-card h3, .service-card p { transform: translateZ(40px); display: block; }
-        .service-card i { font-size: 3rem; color: var(--gold); margin-bottom: 20px; text-shadow: 0 0 15px var(--gold-glow); }
-        .service-card h3 { font-size: 1.5rem; margin-bottom: 15px; color: #fff; }
-        .service-card p { color: var(--text-muted); line-height: 1.7; font-size: 1rem; }
-
-        /* === مختبر الإعلانات === */
-        .ad-lab-section { perspective: 1000px; }
-        
-        .lab-container {
-            position: relative; width: 100%; min-height: 400px;
-            background: #111; border-radius: 30px; border: 2px solid #333;
-            overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 50px rgba(0,0,0,0.8);
+        .lab-icon-main {
+            font-size: 4rem; color: #ff3333; margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(255, 51, 51, 0.5));
             transition: all 0.5s ease;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
+        .lab-container.win .lab-icon-main { color: var(--gold); filter: drop-shadow(0 0 30px var(--gold)); }
 
-        .lab-container.loss { border-color: #ff3333; box-shadow: 0 0 40px rgba(255, 51, 51, 0.2), inset 0 0 50px rgba(255, 0, 0, 0.1); }
-        .lab-container.loss .lab-icon { color: #ff3333; }
-        .lab-container.loss .counter-red { color: #ff3333; text-shadow: 0 0 15px rgba(255,51,51,0.8); }
+        .lab-content h3 { font-size: 2rem; color: #fff; margin-bottom: 15px; }
+        .lab-content p { color: var(--text-muted); margin-bottom: 25px; }
         
-        .lab-container.win { border-color: var(--gold); box-shadow: 0 0 60px rgba(212, 175, 55, 0.4), inset 0 0 50px rgba(212, 175, 55, 0.1); }
-        .lab-container.win .lab-icon { color: var(--gold); animation: bounceIcon 0.5s; }
-        .lab-container.win .counter-green { color: var(--green); text-shadow: 0 0 20px rgba(37, 211, 102, 0.8); }
-
-        .lab-content { padding: 40px 30px 10px; text-align: center; position: relative; z-index: 2; width: 100%; }
-        .lab-icon { font-size: 4rem; margin-bottom: 20px; transition: all 0.5s ease; display: inline-block; }
-        .lab-content h3 { font-size: 2rem; color: #fff; margin-bottom: 15px; transition: all 0.5s ease; }
-        .lab-content p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px; transition: all 0.5s ease; }
-        .lab-numbers { font-size: 3rem; font-weight: 900; margin-bottom: 20px; transition: all 0.5s ease; }
+        .lab-numbers { font-size: 3.5rem; font-weight: 900; margin-bottom: 25px; transition: all 0.5s ease; }
+        .counter-red { color: #ff3333; text-shadow: 0 0 20px rgba(255,51,51,0.8); }
+        .counter-green { color: var(--gold); text-shadow: 0 0 30px var(--gold); }
 
         .lab-btn {
-            background: linear-gradient(45deg, #222, #444); color: #fff; border: 1px solid #555;
-            padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer;
-            font-weight: 700; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;
-            margin-bottom: 20px;
+            background: linear-gradient(135deg, #111, #333);
+            color: #fff; border: 1px solid #555;
+            padding: 15px 40px; font-size: 1.1rem; border-radius: 50px; cursor: pointer;
+            font-weight: 700; transition: all 0.3s ease;
+            display: inline-flex; align-items: center; gap: 10px;
         }
-        .lab-btn:hover { background: linear-gradient(45deg, #333, #555); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .lab-btn:hover { background: linear-gradient(135deg, #333, #555); box-shadow: 0 0 20px var(--cyan-dim); }
 
-        .glare {
-            position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-25deg); z-index: 3; pointer-events: none;
-        }
-        .glare.active { animation: shine 0.8s forwards; }
-
-        @keyframes shine { 100% { left: 200%; } }
-        @keyframes bounceIcon { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.5); } }
-
-        /* === المؤشرات الصغيرة === */
         .mini-charts-row {
-            display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;
-            opacity: 0; transform: translateY(10px);
-            transition: all 0.5s ease 0.8s; width: 100%;
+            display: flex; justify-content: center; gap: 15px; margin-bottom: 25px;
+            opacity: 0; transform: translateY(10px); transition: all 0.5s ease 0.5s;
         }
-
         .lab-container.win .mini-charts-row { opacity: 1; transform: translateY(0); }
 
         .mini-chart-item {
-            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px; padding: 8px 15px; text-align: center; min-width: 90px;
+            background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border);
+            border-radius: 10px; padding: 10px 20px; min-width: 100px;
         }
-
-        .mini-chart-item .label-en { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; display: block; margin-bottom: 2px; }
+        .mini-chart-item .label-en { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 1px; display: block; }
         .mini-chart-item .label-ar { font-size: 0.65rem; color: var(--text-muted); display: block; margin-bottom: 5px; }
-        .mini-chart-item .value { font-size: 1.1rem; font-weight: 900; color: var(--gold); }
+        .mini-chart-item .value { font-size: 1.2rem; font-weight: 900; color: var(--cyan); }
         .mini-chart-item.cpa .value { color: #ff3333; }
-        .mini-chart-item.growth .value { color: var(--green); }
+        .mini-chart-item.growth .value { color: var(--gold); }
 
+        /* ========================================== */
         /* === رادار العملاء === */
-        .radar-section { perspective: 1000px; }
+        /* ========================================== */
         .radar-wrapper { display: flex; flex-direction: column; align-items: center; gap: 40px; }
-        .radar-container-pro {
+        
+        .radar-container {
             position: relative; width: 350px; height: 350px;
-            background: #000; border-radius: 50%; border: 2px solid var(--green);
-            box-shadow: 0 0 30px rgba(37, 211, 102, 0.2), inset 0 0 40px rgba(37, 211, 102, 0.1);
-            overflow: hidden; transition: all 0.5s ease;
+            background: #000; border-radius: 50%;
+            border: 2px solid var(--cyan);
+            box-shadow: 0 0 40px var(--cyan-dim), inset 0 0 40px var(--cyan-dim);
+            overflow: hidden;
+            transition: all 0.5s ease;
         }
-        .radar-container-pro::before {
+        
+        .radar-container::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 2px, transparent 2px, transparent 4px);
+            background: repeating-linear-gradient(0deg, rgba(0, 243, 255, 0.1), rgba(0, 243, 255, 0.1) 2px, transparent 2px, transparent 4px);
             z-index: 5; pointer-events: none;
         }
-        .radar-circle-pro { position: absolute; border: 1px solid rgba(37, 211, 102, 0.15); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-        .radar-circle-pro.c1 { width: 120px; height: 120px; }
-        .radar-circle-pro.c2 { width: 240px; height: 240px; }
-        .radar-circle-pro.c3 { width: 360px; height: 360px; }
-        .radar-crosshair { position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: rgba(37, 211, 102, 0.1); transform: translateX(-50%); z-index: 1; }
-        .radar-crosshair::after { content: ''; position: absolute; top: 50%; left: 0; width: 350px; height: 1px; background: rgba(37, 211, 102, 0.1); transform: translateY(-50%); }
+
+        .radar-circle { position: absolute; border: 1px solid rgba(0, 243, 255, 0.15); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .radar-circle.c1 { width: 120px; height: 120px; }
+        .radar-circle.c2 { width: 240px; height: 240px; }
+        .radar-circle.c3 { width: 360px; height: 360px; }
+        
+        .radar-crosshair { position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: rgba(0, 243, 255, 0.15); transform: translateX(-50%); }
+        .radar-crosshair::after { content: ''; position: absolute; top: 50%; left: -175px; width: 350px; height: 1px; background: rgba(0, 243, 255, 0.15); }
+
         .radar-sweep {
             position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; border-radius: 50%;
             transform-origin: center center;
-            background: conic-gradient(from 0deg, rgba(37, 211, 102, 0.6) 0deg, rgba(37, 211, 102, 0.2) 60deg, transparent 90deg, transparent 360deg);
-            opacity: 0.5; transition: opacity 0.5s; z-index: 2; transform: translate(-50%, -50%) rotate(0deg);
+            background: conic-gradient(from 0deg, rgba(0, 243, 255, 0.6) 0deg, rgba(0, 243, 255, 0.2) 60deg, transparent 90deg, transparent 360deg);
+            opacity: 0.5; transition: opacity 0.5s; z-index: 2;
+            transform: translate(-50%, -50%) rotate(0deg);
         }
+
         .radar-blip {
-            position: absolute; width: 8px; height: 8px; background: var(--green);
-            border-radius: 50%; box-shadow: 0 0 10px var(--green), 0 0 20px var(--green);
+            position: absolute; width: 8px; height: 8px; background: var(--cyan);
+            border-radius: 50%; box-shadow: 0 0 10px var(--cyan), 0 0 20px var(--cyan);
             opacity: 0; transition: opacity 0.3s; z-index: 3;
         }
-        .radar-info-pro { text-align: center; max-width: 600px; }
-        .radar-info-pro h3 { font-size: 2rem; color: #fff; margin-bottom: 15px; transition: all 0.5s ease; }
-        .radar-info-pro p { color: var(--text-muted); margin-bottom: 25px; transition: all 0.5s ease; }
-        .radar-numbers-pro { font-size: 2.5rem; font-weight: 900; color: var(--green); margin-bottom: 25px; text-shadow: 0 0 15px rgba(37, 211, 102, 0.5); transition: all 0.5s ease; }
-        
-        .radar-container-pro.active { border-color: var(--green); box-shadow: 0 0 60px rgba(37, 211, 102, 0.4), inset 0 0 50px rgba(37, 211, 102, 0.2); }
-        .radar-container-pro.active .radar-sweep { opacity: 1; animation: spinSweep 2.5s linear infinite; }
+
+        .radar-info { text-align: center; max-width: 600px; }
+        .radar-info h3 { font-size: 2rem; color: #fff; margin-bottom: 15px; transition: all 0.5s ease; }
+        .radar-info p { color: var(--text-muted); margin-bottom: 25px; transition: all 0.5s ease; }
+        .radar-numbers { font-size: 2.5rem; font-weight: 900; color: var(--cyan); margin-bottom: 25px; text-shadow: 0 0 20px var(--cyan-dim); }
+
+        .radar-container.active { border-color: var(--cyan); box-shadow: 0 0 80px var(--cyan); }
+        .radar-container.active .radar-sweep { opacity: 1; animation: spinSweep 2s linear infinite; }
         @keyframes spinSweep { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
-        .radar-container-pro.active .radar-blip { animation: blipFlash 2.5s infinite; }
-        @keyframes blipFlash { 0%, 100% { opacity: 0; transform: scale(0.5); } 10% { opacity: 1; transform: scale(1.2); } 20% { opacity: 1; transform: scale(1); } 80% { opacity: 0; } }
-        .radar-info-pro.active h3 { color: var(--green); text-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
+        .radar-container.active .radar-blip { animation: blipFlash 2s infinite; }
+        @keyframes blipFlash { 0%, 100% { opacity: 0; transform: scale(0.5); } 10% { opacity: 1; transform: scale(1.5); } 20% { opacity: 1; transform: scale(1); } 80% { opacity: 0; } }
+        .radar-info.active h3 { color: var(--cyan); text-shadow: 0 0 20px var(--cyan); }
 
-        /* === زرار الرادار === */
-        .radar-btn-new {
-            background: transparent; color: var(--green); border: 2px solid var(--green);
-            padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer;
-            font-weight: 900; transition: all 0.4s ease; display: inline-flex; align-items: center; gap: 10px;
-            position: relative; overflow: hidden;
-            box-shadow: 0 0 15px rgba(37, 211, 102, 0.3), inset 0 0 10px rgba(37, 211, 102, 0.1);
-            animation: radarPulse 2s infinite;
+        .radar-btn {
+            background: transparent; color: var(--cyan); border: 2px solid var(--cyan);
+            padding: 15px 40px; font-size: 1.1rem; border-radius: 50px; cursor: pointer;
+            font-weight: 900; transition: all 0.4s ease;
+            box-shadow: 0 0 20px var(--cyan-dim), inset 0 0 20px var(--cyan-dim);
+            display: inline-flex; align-items: center; gap: 10px;
         }
-        .radar-btn-new i { font-size: 1.5rem; animation: rotateIcon 3s linear infinite; }
+        .radar-btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 40px var(--cyan); }
+        .radar-btn i { animation: rotateIcon 3s linear infinite; }
         @keyframes rotateIcon { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes radarPulse {
-            0% { box-shadow: 0 0 15px rgba(37, 211, 102, 0.3), inset 0 0 10px rgba(37, 211, 102, 0.1); }
-            50% { box-shadow: 0 0 30px rgba(37, 211, 102, 0.6), inset 0 0 20px rgba(37, 211, 102, 0.2); }
-            100% { box-shadow: 0 0 15px rgba(37, 211, 102, 0.3), inset 0 0 10px rgba(37, 211, 102, 0.1); }
-        }
-        .radar-btn-new:hover { background: var(--green); color: #000; transform: scale(1.05); animation: none; }
-        .radar-btn-new.clicked { background: var(--green); color: #000; border-color: var(--green); animation: none; box-shadow: 0 0 30px rgba(37, 211, 102, 0.6); }
 
+        /* ========================================== */
         /* === الأرقام والإحصائيات === */
-        .stats-section {
-            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
-            padding: 60px 20px; background: rgba(255,255,255,0.02);
-            border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);
-            perspective: 1000px;
+        /* ========================================== */
+        .stats-grid {
+            display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+            padding: 60px 20px;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.01);
         }
-        .stat-item { text-align: center; transform: translateZ(20px); }
-        .stat-item h3 { font-size: 3rem; color: var(--gold); font-weight: 900; text-shadow: 0 0 20px var(--gold-glow); }
-        .stat-item p { color: var(--text-muted); font-size: 1.1rem; font-weight: 600; }
+        .stat-item { text-align: center; }
+        .stat-item h3 {
+            font-size: 3.5rem; font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px var(--gold-dim);
+        }
+        .stat-item p { color: var(--text-muted); font-size: 1rem; font-weight: 600; letter-spacing: 1px; }
 
+        /* ========================================== */
         /* === التواصل === */
+        /* ========================================== */
         .contact-section {
-            text-align: center; background: linear-gradient(135deg, rgba(20,20,30,0.9) 0%, rgba(5,5,10,0.9) 100%);
-            border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 30px; padding: 60px 20px;
-            position: relative; overflow: hidden;
-            box-shadow: inset 0 0 50px rgba(212, 175, 55, 0.1), 0 20px 50px rgba(0,0,0,0.5);
-            transform-style: preserve-3d; max-width: 1000px; margin: 0 auto;
+            text-align: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 80px 30px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
         }
-        .contact-section h2 { font-size: 2rem; margin-bottom: 20px; color: #fff; transform: translateZ(30px); }
-        .contact-section p { color: var(--text-muted); margin-bottom: 30px; transform: translateZ(20px); }
-        .contact-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; position: relative; z-index: 2; transform-style: preserve-3d; }
+        .contact-section::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, var(--gold-dim), transparent 60%);
+            opacity: 0.1; animation: rotateBg 20s linear infinite;
+        }
+        @keyframes rotateBg { 100% { transform: rotate(360deg); } }
+        
+        .contact-section h2 { font-size: 2.2rem; margin-bottom: 20px; color: #fff; position: relative; z-index: 2; }
+        .contact-section p { color: var(--text-muted); margin-bottom: 40px; position: relative; z-index: 2; }
+        
+        .contact-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; position: relative; z-index: 2; }
+        
         .btn-social {
             width: 60px; height: 60px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.5rem; color: #fff; text-decoration: none;
-            transition: all 0.4s ease; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); transform: translateZ(20px);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s ease;
         }
-        .btn-social:hover, .btn-social:active { transform: translateZ(40px) scale(1.1); background: var(--gold); color: #000; border-color: var(--gold); box-shadow: 0 10px 20px var(--gold-glow); }
+        .btn-social:hover {
+            background: var(--gold); color: #000;
+            border-color: var(--gold);
+            box-shadow: 0 0 30px var(--gold);
+            transform: translateY(-5px);
+        }
 
-        /* زر الواتساب */
+        /* زر الواتساب العائم */
         .floating-wa {
-            position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white;
-            width: 60px; height: 60px; border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; font-size: 1.8rem;
-            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); z-index: 999;
-            text-decoration: none; animation: bounce 2s infinite;
+            position: fixed; bottom: 30px; right: 30px;
+            width: 65px; height: 65px; border-radius: 50%;
+            background: #25d366; color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; text-decoration: none; z-index: 999;
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.5);
+            animation: waPulse 2s infinite;
         }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-15px); } 60% { transform: translateY(-7px); } }
+        @keyframes waPulse {
+            0% { box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(37, 211, 102, 0.8); }
+            100% { box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
+        }
 
-        footer { text-align: center; padding: 30px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+        footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.9rem; position: relative; z-index: 10; }
 
+        /* ========================================== */
         /* === إعدادات الموبايل === */
+        /* ========================================== */
         @media (max-width: 900px) {
-            .hero-content { flex-direction: column-reverse; text-align: center; gap: 30px; }
+            body { cursor: auto; } /* إرجاع المؤشر الأصلي في الموبايل */
+            .cursor { display: none; }
+            
+            .hero-content { flex-direction: column-reverse; text-align: center; gap: 40px; }
             .hero-text h1 { font-size: 2.5rem; }
             .hero-text p { margin: 0 auto 30px; }
-            .hero-image { width: 250px; height: 250px; min-width: 250px; min-height: 250px; }
-            .hero-image img { width: calc(250px - 4px); height: calc(250px - 4px); }
-            .why-me-box p { font-size: 1rem; }
-            .why-icons { gap: 15px; }
-            .why-icon-item i { font-size: 2rem; }
-            .mini-chart-item { min-width: 70px; padding: 5px 8px; }
-            .mini-chart-item .label-en { font-size: 0.65rem; }
-            .mini-chart-item .label-ar { font-size: 0.55rem; }
-            .mini-chart-item .value { font-size: 0.9rem; }
-            .radar-container-pro { width: 280px; height: 280px; }
-            .radar-circle-pro.c1 { width: 90px; height: 90px; }
-            .radar-circle-pro.c2 { width: 180px; height: 180px; }
-            .radar-circle-pro.c3 { width: 270px; height: 270px; }
-            .radar-info-pro h3 { font-size: 1.5rem; }
-            .radar-numbers-pro { font-size: 2rem; }
-            .contact-buttons { flex-direction: column; width: 100%; }
-            .contact-buttons .btn { width: 100%; }
-            .social-icons-wrap { flex-direction: row !important; flex-wrap: wrap; }
-            .stats-section { gap: 20px; }
-            .stat-item h3 { font-size: 2rem; }
+            
+            .hero-image-container { width: 280px; height: 280px; }
+            .orb { width: 240px; height: 240px; }
+            
+            .services-grid { grid-template-columns: 1fr; }
+            
+            .stats-grid { gap: 30px; }
+            .stat-item h3 { font-size: 2.5rem; }
+            
+            .contact-buttons { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- الخلفية -->
-    <div class="space-bg">
-        <div class="stars"></div>
-    </div>
+    <!-- مؤشر الماوس المخصص -->
+    <div class="cursor" id="customCursor"></div>
 
+    <!-- خلفية Canvas الكونية -->
+    <canvas id="cosmic-canvas"></canvas>
+
+    <!-- شريط التقدم -->
     <div id="progress-bar"></div>
 
+    <!-- زر الواتساب العائم -->
     <a href="https://wa.me/201008989072" target="_blank" class="floating-wa" aria-label="تواصل عبر واتساب">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -434,73 +550,48 @@
     <!-- ========================================== -->
     <header>
         <div class="hero-content">
-            <div class="hero-text reveal-3d">
-                <h1>براندك بيخسر فلوس في <span>إعلانات عشوائية؟</span></h1>
-                <h2>أنا محمد حريز، بصلح ده.</h2>
+            <div class="hero-text reveal">
+                <h1 id="typewriter">براندك بيخسر فلوس في إعلانات عشوائية؟</h1>
+                <h2>I'm Mohamed Hreez — Media Buyer</h2>
                 <p>خبير ميديا باينج وتسويق إلكتروني. بساعد العلامات التجارية تحول ميزانيتها الضايعة لأرباح حقيقية، من خلال حملات مدروسة بالبيانات ومنهجية واضحة.</p>
-                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <div class="btn-group">
                     <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> تعاقد معي</a>
                     <a href="#services" class="btn btn-outline"><i class="fas fa-briefcase"></i> خدماتي</a>
                 </div>
             </div>
             
-            <div class="hero-image reveal-3d">
-                <img src="Mohamed_Hreez.jpg" alt="Mohamed Hreez" id="profilePic">
+            <div class="hero-image-container reveal">
+                <div class="orb">
+                    <div class="orb-ring"></div>
+                    <div class="orb-ring"></div>
+                    <img src="Mohamed_Hreez.jpg" alt="Mohamed Hreez" id="profilePic">
+                </div>
             </div>
         </div>
     </header>
 
     <!-- ========================================== -->
-    <!-- 2. ليه تختارني -->
+    <!-- 2. الخدمات -->
     <!-- ========================================== -->
-    <section class="section-wrapper section-reveal why-me-section">
-        <h2 class="section-title">ليه تختارني <span>كشريك نجاح؟</span></h2>
-        <div class="why-me-box">
-            <p>مش بس بعمل حملات إعلانية، أنا بشتغل <span class="highlight">كشريك نجاح ليك</span>. بدرس جمهورك، بحلل منافسينك، وبصمم حملات بتجيب <span class="highlight">عملاء حقيقيين</span> وبتزود أرباحك.</p>
-            
-            <div class="why-icons">
-                <div class="why-icon-item">
-                    <i class="fas fa-chart-line"></i>
-                    <span>البيانات أولاً</span>
-                </div>
-                <div class="why-icon-item">
-                    <i class="fas fa-bullseye"></i>
-                    <span>استهداف دقيق</span>
-                </div>
-                <div class="why-icon-item">
-                    <i class="fas fa-handshake"></i>
-                    <span>شريك نجاح</span>
-                </div>
-                <div class="why-icon-item">
-                    <i class="fas fa-rocket"></i>
-                    <span>نمو حقيقي</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 3. الخدمات -->
-    <!-- ========================================== -->
-    <section id="services" class="section-wrapper section-reveal">
-        <h2 class="section-title">خدماتي <span>الاحترافية</span></h2>
+    <section id="services">
+        <h2 class="section-title reveal">خدماتي الاحترافية</h2>
         <div class="services-grid">
-            <div class="service-card tilt-3d">
+            <div class="glass-card reveal">
                 <i class="fas fa-bullseye"></i>
                 <h3>الميديا باينج</h3>
                 <p>إطلاق وإدارة حملات إعلانية على فيسبوك، انستجرام، وتيك توك بأعلى معدل تحويل وأقل تكلفة ممكنة.</p>
             </div>
-            <div class="service-card tilt-3d">
+            <div class="glass-card reveal">
                 <i class="fas fa-user-graduate"></i>
                 <h3>تدريب شخصي (One-to-One)</h3>
-                <p>كوتشينج فردي شامل في التجارة الإلكترونية: من اختيار المنتج، تصميم صفحة المنتج، تصميم الإعلان الصحيح، تحليل البيانات، وعمل اسكيل (Scale) ناجح لزيادة الأرباح.</p>
+                <p>كوتشينج فردي شامل في التجارة الإلكترونية: من اختيار المنتج، تصميم صفحة المنتج، تصميم الإعلان الصحيح، تحليل البيانات، وعمل اسكيل ناجح.</p>
             </div>
-            <div class="service-card tilt-3d">
+            <div class="glass-card reveal">
                 <i class="fas fa-chart-line"></i>
-                <h3>تحليل البيانات وتحسين الحملات</h3>
-                <p>تحليل أداء الحملات الإعلانية (Optimization) بشكل دوري، لمعرفة نقاط القوة والضعف، وتقليل تكلفة التحويل (CPA) لتحقيق أقصى عائد على الاستثمار (ROI).</p>
+                <h3>تحليل البيانات</h3>
+                <p>تحليل أداء الحملات الإعلانية (Optimization) بشكل دوري، لمعرفة نقاط القوة والضعف، وتقليل تكلفة التحويل (CPA).</p>
             </div>
-            <div class="service-card tilt-3d">
+            <div class="glass-card reveal">
                 <i class="fas fa-chart-pie"></i>
                 <h3>التسويق الإلكتروني</h3>
                 <p>بناء استراتيجيات تسويق متكاملة لزيادة الوعي بعلامتك التجارية والوصول إلى الجمهور المستهدف بدقة.</p>
@@ -509,13 +600,13 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 4. مختبر الإعلانات -->
+    <!-- 3. مختبر الإعلانات -->
     <!-- ========================================== -->
-    <section class="section-wrapper section-reveal ad-lab-section">
-        <h2 class="section-title">جرّب بنفسك.. <span>سر الإعلان الناجح</span></h2>
-        <div class="lab-container loss" id="labScreen">
-            <div class="lab-content" id="labContent">
-                <i class="fas fa-chart-line lab-icon" id="labIcon"></i>
+    <section>
+        <h2 class="section-title reveal">جرّب بنفسك.. سر الإعلان الناجح</h2>
+        <div class="lab-container reveal" id="labContainer">
+            <div class="lab-content">
+                <i class="fas fa-chart-line lab-icon-main" id="labIcon"></i>
                 <h3 id="labTitle">حملة عشوائية = خسارة</h3>
                 <p id="labText">بدون استراتيجية وبيانات دقيقة، ميزانيتك بتتبخر.</p>
                 
@@ -544,20 +635,19 @@
                     <i class="fas fa-bolt"></i> شغّل الإعلان الصح
                 </button>
             </div>
-            <div class="glare" id="glare"></div>
         </div>
     </section>
 
     <!-- ========================================== -->
-    <!-- 5. رادار العملاء -->
+    <!-- 4. رادار العملاء -->
     <!-- ========================================== -->
-    <section class="section-wrapper section-reveal radar-section">
-        <h2 class="section-title">اكتشف <span>جمهورك المستهدف</span></h2>
-        <div class="radar-wrapper">
-            <div class="radar-container-pro" id="radarScreen">
-                <div class="radar-circle-pro c1"></div>
-                <div class="radar-circle-pro c2"></div>
-                <div class="radar-circle-pro c3"></div>
+    <section>
+        <h2 class="section-title reveal">اكتشف جمهورك المستهدف</h2>
+        <div class="radar-wrapper reveal">
+            <div class="radar-container" id="radarScreen">
+                <div class="radar-circle c1"></div>
+                <div class="radar-circle c2"></div>
+                <div class="radar-circle c3"></div>
                 <div class="radar-crosshair"></div>
                 <div class="radar-sweep" id="radarSweep"></div>
                 
@@ -566,14 +656,13 @@
                 <div class="radar-blip" style="top: 70%; left: 30%; animation-delay: 0.8s;"></div>
                 <div class="radar-blip" style="top: 40%; left: 80%; animation-delay: 1.8s;"></div>
                 <div class="radar-blip" style="top: 80%; left: 60%; animation-delay: 1.5s;"></div>
-                <div class="radar-blip" style="top: 20%; left: 60%; animation-delay: 2.2s;"></div>
             </div>
 
-            <div class="radar-info-pro" id="radarInfo">
+            <div class="radar-info" id="radarInfo">
                 <h3 id="radarTitle">جمهورك مستخبي.. وإعلانك مش واصله!</h3>
                 <p id="radarText">من غير بيانات دقيقة، إعلاناتك بتروح لناس مش مهتمة.</p>
-                <div class="radar-numbers-pro" id="radarNumbers"><span>0 عميل محتمل</span></div>
-                <button class="radar-btn-new" id="radarBtn">
+                <div class="radar-numbers" id="radarNumbers"><span>0 عميل محتمل</span></div>
+                <button class="radar-btn" id="radarBtn">
                     <i class="fas fa-satellite-dish"></i> فعّل الرادار
                 </button>
             </div>
@@ -581,22 +670,24 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 6. الأرقام والإحصائيات -->
+    <!-- 5. الأرقام والإحصائيات -->
     <!-- ========================================== -->
-    <div class="stats-section section-reveal">
-        <div class="stat-item"><h3 class="counter" data-target="4">0</h3><p>سنوات خبرة</p></div>
-        <div class="stat-item"><h3 class="counter" data-target="50">0</h3><p>+ عميل سعيد</p></div>
-        <div class="stat-item"><h3 class="counter" data-target="100">0</h3><p>+ حملة ناجحة</p></div>
-    </div>
+    <section style="padding: 0;">
+        <div class="stats-grid reveal">
+            <div class="stat-item"><h3 class="counter" data-target="4">0</h3><p>سنوات خبرة</p></div>
+            <div class="stat-item"><h3 class="counter" data-target="50">0</h3><p>+ عميل سعيد</p></div>
+            <div class="stat-item"><h3 class="counter" data-target="100">0</h3><p>+ حملة ناجحة</p></div>
+        </div>
+    </section>
 
     <!-- ========================================== -->
-    <!-- 7. التواصل -->
+    <!-- 6. التواصل -->
     <!-- ========================================== -->
-    <section id="contact" class="section-wrapper section-reveal">
-        <div class="contact-section">
+    <section id="contact">
+        <div class="contact-section reveal">
             <h2>جاهز تنقل براندك لمستوى تاني؟</h2>
             <p>لو عايز إعلانات بتجيب أرباح حقيقية، أو محتاج تدريب شخصي يخليك محترف.. تواصل معي دلوقتي.</p>
-            <div class="contact-buttons" style="margin-bottom: 40px;">
+            <div class="contact-buttons" style="margin-bottom: 30px;">
                 <a href="https://wa.me/201008989072" target="_blank" class="btn btn-primary" style="background: #25d366; color: white;">
                     <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> واتساب
                 </a>
@@ -604,8 +695,7 @@
                     <i class="fas fa-envelope"></i> إيميل
                 </a>
             </div>
-            <h3 style="margin-bottom: 20px; color: var(--text-muted); font-weight: 400;">تابعني على:</h3>
-            <div class="contact-buttons social-icons-wrap">
+            <div class="contact-buttons">
                 <a href="https://www.facebook.com/share/1EysgMxxCS/" target="_blank" class="btn-social"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://tiktok.com/@hreezstudio" target="_blank" class="btn-social"><i class="fab fa-tiktok"></i></a>
                 <a href="https://www.instagram.com/mohamed.hreez?dlrf=Y3d6cm5rYWV0anlz" target="_blank" class="btn-social"><i class="fab fa-instagram"></i></a>
@@ -618,7 +708,89 @@
     </footer>
 
     <script>
-        // 1. شريط التقدم
+        /* ========================================== */
+        /* 1. مؤشر الماوس المخصص */
+        /* ========================================== */
+        const cursor = document.getElementById('customCursor');
+        const hoverElements = document.querySelectorAll('a, button, .glass-card, .btn');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        /* ========================================== */
+        /* 2. خلفية Canvas الكونية */
+        /* ========================================== */
+        const canvas = document.getElementById('cosmic-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+        let mouse = { x: 0, y: 0 };
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Star {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.z = Math.random() * 1000 + 1;
+                this.size = Math.random() * 2 + 0.5;
+                this.color = Math.random() > 0.7 ? 'rgba(255, 215, 0, 0.8)' : (Math.random() > 0.5 ? 'rgba(0, 243, 255, 0.6)' : 'rgba(255, 255, 255, 0.5)');
+            }
+            update() {
+                // تفاعل بسيط مع الماوس
+                let dx = this.x - mouse.x;
+                let dy = this.y - mouse.y;
+                let dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < 100) {
+                    this.x += dx / dist * 2;
+                    this.y += dy / dist * 2;
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 400; i++) {
+            stars.push(new Star());
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        /* ========================================== */
+        /* 3. شريط التقدم */
+        /* ========================================== */
         window.onscroll = function() {
             var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -626,39 +798,67 @@
             document.getElementById("progress-bar").style.width = scrolled + "%";
         };
 
-        // ==========================================
-        // 2. تأثير الظهور الموحد لكل سيكشن (ناعم وجميل)
-        // ==========================================
-        const sectionReveals = document.querySelectorAll(".section-reveal");
-        const sectionObserver = new IntersectionObserver((entries) => {
+        /* ========================================== */
+        /* 4. تأثير الظهور عند التمرير (Reveal) */
+        /* ========================================== */
+        const reveals = document.querySelectorAll(".reveal");
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add("active");
-                    sectionObserver.unobserve(entry.target); // يشتغل مرة واحدة بس
+                    revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15 }); // يبدأ يظهر لما 15% من السيكشن يبان
+        }, { threshold: 0.1 });
+        reveals.forEach(el => revealObserver.observe(el));
 
-        sectionReveals.forEach(section => sectionObserver.observe(section));
+        /* ========================================== */
+        /* 5. مؤثر الكتابة (Typewriter) */
+        /* ========================================== */
+        const typewriterElement = document.getElementById('typewriter');
+        const typewriterText = typewriterElement.innerText;
+        typewriterElement.innerText = '';
+        let charIndex = 0;
 
-        // ==========================================
-        // 3. أنيميشن الكروت (يظهر مع بعضه بشكل ناعم)
-        // ==========================================
-        const cards = document.querySelectorAll(".service-card");
-        const cardObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("active");
-                    cardObserver.unobserve(entry.target);
-                }
+        function typeWriter() {
+            if (charIndex < typewriterText.length) {
+                typewriterElement.innerHTML += typewriterText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 60);
+            } else {
+                // بعد ما يخلص كتابة، نرجع النص ملون عادي
+                typewriterElement.innerHTML = 'براندك بيخسر فلوس في <span style="color: var(--gold);">إعلانات عشوائية؟</span>';
+            }
+        }
+        // نبدأ الكتابة بعد ما الصفحة تحمل
+        setTimeout(typeWriter, 500);
+
+        /* ========================================== */
+        /* 6. أنيميشن الكروت الزجاجية */
+        /* ========================================== */
+        const cards = document.querySelectorAll('.glass-card');
+        cards.forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        /* ========================================== */
+        /* 7. تفعيل 3D Tilt (للكمبيوتر فقط) */
+        /* ========================================== */
+        if (window.innerWidth > 900) {
+            VanillaTilt.init(document.querySelectorAll(".glass-card"), {
+                max: 10,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.2,
+                scale: 1.02
             });
-        }, { threshold: 0.2 });
-        
-        cards.forEach(card => cardObserver.observe(card));
+        }
 
-        // 4. حركة الأرقام
+        /* ========================================== */
+        /* 8. حركة الأرقام */
+        /* ========================================== */
         const counters = document.querySelectorAll('.counter');
-        const speed = 200; 
+        const speed = 200;
         const animateCounters = () => {
             counters.forEach(counter => {
                 const updateCount = () => {
@@ -683,29 +883,19 @@
                 }
             });
         }, { threshold: 0.5 });
-        document.querySelectorAll('.stats-section').forEach(section => {
+        document.querySelectorAll('.stats-grid').forEach(section => {
             counterObserver.observe(section);
         });
 
-        // 5. تفعيل مكتبة 3D Tilt على الكروت (للكمبيوتر فقط)
-        if (window.innerWidth > 900) {
-            VanillaTilt.init(document.querySelectorAll(".tilt-3d"), {
-                max: 15,
-                speed: 400,
-                glare: true,
-                "max-glare": 0.2,
-                scale: 1.05
-            });
-        }
-
-        // 6. مختبر الإعلانات + المؤشرات
+        /* ========================================== */
+        /* 9. مختبر الإعلانات + المؤشرات */
+        /* ========================================== */
         const labBtn = document.getElementById('labBtn');
-        const labContainer = document.querySelector('.lab-container');
+        const labContainer = document.getElementById('labContainer');
         const labTitle = document.getElementById('labTitle');
         const labText = document.getElementById('labText');
         const labNumbers = document.getElementById('labNumbers');
         const labIcon = document.getElementById('labIcon');
-        const glare = document.getElementById('glare');
         const miniChartVal1 = document.getElementById('miniChartVal1');
         const miniChartVal2 = document.getElementById('miniChartVal2');
         const miniChartVal3 = document.getElementById('miniChartVal3');
@@ -716,8 +906,6 @@
                 if (isClicked) return;
                 isClicked = true;
 
-                glare.classList.add('active');
-                labContainer.classList.remove('loss');
                 labContainer.classList.add('win');
                 labIcon.classList.remove('fa-chart-line');
                 labIcon.classList.add('fa-rocket');
@@ -773,7 +961,9 @@
             });
         }
 
-        // 7. سيكشن رادار العملاء
+        /* ========================================== */
+        /* 10. رادار العملاء */
+        /* ========================================== */
         const radarBtn = document.getElementById('radarBtn');
         const radarScreen = document.getElementById('radarScreen');
         const radarInfo = document.getElementById('radarInfo');
@@ -789,12 +979,12 @@
 
                 radarScreen.classList.add('active');
                 radarInfo.classList.add('active');
-                radarBtn.classList.add('clicked');
                 
                 radarTitle.innerHTML = '🎯 جمهورك المستهدف اتحدد!';
                 radarText.innerHTML = 'البيانات بتاعتنا وصلتك للعميل الصح، في الوقت الصح.';
                 radarBtn.innerHTML = '<i class="fas fa-check"></i> تم التحديد!';
-                radarBtn.style.animation = 'none';
+                radarBtn.style.background = 'var(--cyan)';
+                radarBtn.style.color = '#000';
 
                 let currentVal = 0;
                 const targetVal = 10000;
