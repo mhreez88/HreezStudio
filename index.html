@@ -107,8 +107,6 @@
             justify-content: center; 
             position: relative; 
             transform-style: preserve-3d;
-            
-            /* الحل: العرض 320 والارتفاع 320 مع aspect-ratio يضمن المربع */
             width: 320px;
             height: 320px;
             aspect-ratio: 1 / 1;
@@ -179,7 +177,6 @@
         }
         .why-me-box p span.highlight { color: var(--gold); font-weight: 900; }
         
-        /* الأيقونات داخل ليه تختارني */
         .why-icons {
             display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px;
         }
@@ -214,7 +211,7 @@
         .service-card h3 { font-size: 1.5rem; margin-bottom: 15px; color: #fff; }
         .service-card p { color: var(--text-muted); line-height: 1.7; font-size: 1rem; }
 
-        /* === مختبر الإعلانات (المعدل) === */
+        /* === مختبر الإعلانات === */
         .ad-lab-section { padding: 80px 20px; max-width: 800px; margin: 0 auto; perspective: 1000px; }
         
         .lab-container {
@@ -260,7 +257,7 @@
         @keyframes shine { 100% { left: 200%; } }
         @keyframes bounceIcon { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.5); } }
 
-        /* === المؤشرات الصغيرة فوق الرقم === */
+        /* === المؤشرات الصغيرة === */
         .mini-charts-row {
             display: flex;
             justify-content: center;
@@ -287,25 +284,16 @@
         }
 
         .mini-chart-item .label-en {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-            display: block;
-            margin-bottom: 2px;
+            font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
+            letter-spacing: 1px; display: block; margin-bottom: 2px;
         }
 
         .mini-chart-item .label-ar {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 5px;
+            font-size: 0.65rem; color: var(--text-muted); display: block; margin-bottom: 5px;
         }
 
         .mini-chart-item .value {
-            font-size: 1.1rem;
-            font-weight: 900;
-            color: var(--gold);
+            font-size: 1.1rem; font-weight: 900; color: var(--gold);
         }
 
         .mini-chart-item.cpa .value { color: #ff3333; }
@@ -354,7 +342,7 @@
         @keyframes blipFlash { 0%, 100% { opacity: 0; transform: scale(0.5); } 10% { opacity: 1; transform: scale(1.2); } 20% { opacity: 1; transform: scale(1); } 80% { opacity: 0; } }
         .radar-info-pro.active h3 { color: var(--green); text-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
 
-        /* === زرار الرادار (لافت) === */
+        /* === زرار الرادار === */
         .radar-btn-new {
             background: transparent; color: var(--green); border: 2px solid var(--green);
             padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer;
@@ -423,19 +411,14 @@
             .hero-content { flex-direction: column-reverse; text-align: center; gap: 30px; }
             .hero-text h1 { font-size: 2.5rem; }
             .hero-text p { margin: 0 auto 30px; }
-            
-            /* تصغير الحاوية في الموبايل */
             .hero-image { width: 250px; height: 250px; min-width: 250px; min-height: 250px; }
-            
             .why-me-box p { font-size: 1rem; }
             .why-icons { gap: 15px; }
             .why-icon-item i { font-size: 2rem; }
-            
             .mini-chart-item { min-width: 70px; padding: 5px 8px; }
             .mini-chart-item .label-en { font-size: 0.65rem; }
             .mini-chart-item .label-ar { font-size: 0.55rem; }
             .mini-chart-item .value { font-size: 0.9rem; }
-            
             .radar-container-pro { width: 280px; height: 280px; }
             .radar-circle-pro.c1 { width: 90px; height: 90px; }
             .radar-circle-pro.c2 { width: 180px; height: 180px; }
@@ -464,7 +447,7 @@
     </a>
 
     <!-- ========================================== -->
-    <!-- 1. الهيدر (المشكلة + الحل السريع) -->
+    <!-- 1. الهيدر -->
     <!-- ========================================== -->
     <header>
         <div class="hero-content">
@@ -480,10 +463,10 @@
             
             <div class="hero-image reveal-3d">
                 <!-- ======================================================= -->
-                <!-- 👇 ضع رابط صورتك هنا (بدل YOUR_IMAGE_LINK_HERE.jpg) 👇 -->
+                <!-- 👇 الصورة الشخصية (كود الصورة) 👇 -->
                 <!-- ======================================================= -->
                 <div class="image-note" id="imageNote">⚠️ ضع رابط صورتك هنا</div>
-                <img src="YOUR_IMAGE_LINK_HERE.jpg" alt="محمد حريز - Media Buyer" id="profilePic">
+                <img src="Mohamed_Hreez.jpg" alt="Mohamed Hreez" id="profilePic">
                 <!-- ======================================================= -->
             </div>
         </div>
@@ -524,7 +507,6 @@
     <section id="services">
         <h2 class="section-title reveal-3d">خدماتي <span>الاحترافية</span></h2>
         <div class="services-grid">
-            <!-- تم إضافة كلاس tilt-3d للكروت -->
             <div class="service-card reveal-3d tilt-3d">
                 <i class="fas fa-bullseye"></i>
                 <h3>الميديا باينج</h3>
@@ -846,7 +828,7 @@
         const profilePic = document.getElementById('profilePic');
         const imageNote = document.getElementById('imageNote');
         
-        if (profilePic && profilePic.src.includes('YOUR_IMAGE_LINK_HERE.jpg')) {
+        if (profilePic && profilePic.src.includes('Mohamed_Hreez.jpg')) {
             imageNote.style.display = 'block';
             profilePic.style.opacity = '0.3';
             profilePic.style.border = '2px dashed #ff3333';
