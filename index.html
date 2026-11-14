@@ -105,6 +105,7 @@
             flex: 1; 
             display: flex; 
             justify-content: center; 
+            align-items: center;
             position: relative; 
             transform-style: preserve-3d;
             width: 320px;
@@ -112,27 +113,25 @@
             aspect-ratio: 1 / 1;
             min-width: 320px;
             min-height: 320px;
+            /* خلفية خفيفة عشان لو الصورة مش مربعة تبان الكادر */
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 30px;
+            padding: 5px; /* مساحة صغيرة عشان الإطار */
         }
-
-        .image-note {
-            position: absolute; top: -30px; background: #ff3333; color: #fff;
-            padding: 5px 15px; border-radius: 5px; font-size: 0.9rem; font-weight: 700;
-            z-index: 10; display: none; animation: pulseNote 2s infinite;
-        }
-
-        @keyframes pulseNote { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
         .hero-image img {
             width: 100%; 
             height: 100%; 
-            border-radius: 30px; 
-            object-fit: cover;
+            border-radius: 25px; 
+            /* الحل هنا: contain عشان الصورة تبان كاملة */
+            object-fit: contain; 
             border: 2px solid rgba(212, 175, 55, 0.5);
             box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 40px rgba(212, 175, 55, 0.3);
             position: relative; 
             z-index: 2;
             transform: translateZ(80px) rotateY(-5deg) rotateX(5deg);
             animation: float 6s ease-in-out infinite;
+            background-color: #111; /* خلفية للصورة عشان لو فيها شفافية */
         }
 
         @keyframes float {
@@ -463,9 +462,8 @@
             
             <div class="hero-image reveal-3d">
                 <!-- ======================================================= -->
-                <!-- 👇 الصورة الشخصية (كود الصورة) 👇 -->
+                <!-- 👇 الصورة الشخصية 👇 -->
                 <!-- ======================================================= -->
-                <div class="image-note" id="imageNote">⚠️ ضع رابط صورتك هنا</div>
                 <img src="Mohamed_Hreez.jpg" alt="Mohamed Hreez" id="profilePic">
                 <!-- ======================================================= -->
             </div>
@@ -822,18 +820,6 @@
                 requestAnimationFrame(updateNumber);
                 if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
             });
-        }
-
-        // 7. إظهار الملحوظة الحمراء لو الصورة لسه ماتحطتش
-        const profilePic = document.getElementById('profilePic');
-        const imageNote = document.getElementById('imageNote');
-        
-        if (profilePic && profilePic.src.includes('Mohamed_Hreez.jpg')) {
-            imageNote.style.display = 'block';
-            profilePic.style.opacity = '0.3';
-            profilePic.style.border = '2px dashed #ff3333';
-        } else if (profilePic) {
-            imageNote.style.display = 'none';
         }
     </script>
 </body>
