@@ -464,6 +464,75 @@
         .stat-item p { color: var(--text-muted); font-size: 1rem; font-weight: 600; letter-spacing: 1px; }
 
         /* ========================================== */
+        /* === آراء العملاء (Testimonials) === */
+        /* ========================================== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
+        }
+
+        .testimonial-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan-dim);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px var(--cyan-dim);
+        }
+
+        .testimonial-quote-icon {
+            font-size: 2.5rem;
+            color: var(--cyan);
+            opacity: 0.2;
+            position: absolute;
+            top: 20px; right: 20px;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: #d0d0e0;
+            margin-bottom: 25px;
+            font-style: italic;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+        }
+
+        .testimonial-author-info h4 {
+            font-size: 1.1rem;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .testimonial-author-info span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .testimonial-stars {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-left: auto;
+        }
+
+        /* ========================================== */
         /* === التواصل === */
         /* ========================================== */
         .contact-section {
@@ -489,6 +558,15 @@
         
         .contact-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; position: relative; z-index: 2; }
         
+        /* ✅ أيقونات السوشيال ميديا جنب بعضها */
+        .social-icons-wrap {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: center !important;
+            flex-wrap: wrap !important;
+            gap: 15px !important;
+        }
+
         .btn-social {
             width: 60px; height: 60px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
@@ -520,7 +598,7 @@
             100% { box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
         }
 
-        /* === التأثير الصوتي البصري (Visual Sound Waves) === */
+        /* === التأثير الصوتي البصري === */
         .sound-wave {
             position: fixed;
             border: 2px solid var(--gold);
@@ -551,12 +629,21 @@
             .hologram-container { width: 240px; height: 240px; }
             
             .services-grid { grid-template-columns: 1fr; }
-            .glass-card { animation: none; } /* إيقاف الطفو في الموبايل عشان الأداء */
+            .glass-card { animation: none; }
             
             .stats-grid { gap: 30px; }
             .stat-item h3 { font-size: 2.5rem; }
             
+            /* ✅ في الموبايل: الأزرار الأساسية تبقى تحت بعضها، لكن السوشيال تفضل جنب بعضها */
             .contact-buttons { flex-direction: column; align-items: center; }
+            
+            .social-icons-wrap {
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+            }
+            
+            .testimonials-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -565,7 +652,7 @@
     <!-- مؤشر الماوس المخصص -->
     <div class="cursor" id="customCursor"></div>
 
-    <!-- خلفية Canvas الكونية (Warp Speed) -->
+    <!-- خلفية Canvas الكونية -->
     <canvas id="cosmic-canvas"></canvas>
 
     <!-- شريط التقدم -->
@@ -629,7 +716,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 3. مختبر الإعلانات (Cracked Glass) -->
+    <!-- 3. مختبر الإعلانات -->
     <!-- ========================================== -->
     <section>
         <h2 class="section-title reveal">جرّب بنفسك.. سر الإعلان الناجح</h2>
@@ -711,12 +798,69 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 6. التواصل -->
+    <!-- 6. آراء العملاء (Testimonials) -->
+    <!-- ========================================== -->
+    <section id="testimonials">
+        <h2 class="section-title reveal">آراء <span style="color: var(--gold);">العملاء</span></h2>
+        <div class="testimonials-grid">
+            
+            <!-- رأي 1 -->
+            <div class="testimonial-card reveal">
+                <i class="fas fa-quote-right testimonial-quote-icon"></i>
+                <p class="testimonial-text">"محمد غيّر نظرتي تماماً للإعلانات. كنت بصرف فلوس كتير من غير نتيجة، ومن أول شهر معاه الـ ROAS بتاعي تعدى 4x. شغل احترافي بجد."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-author-info">
+                        <h4>أحمد محمود</h4>
+                        <span>صاحب متجر إلكتروني</span>
+                    </div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- رأي 2 -->
+            <div class="testimonial-card reveal">
+                <i class="fas fa-quote-right testimonial-quote-icon"></i>
+                <p class="testimonial-text">"التدريب الشخصي (One-to-One) مع محمد كان أفضل استثمار عملته. شرح لي اختيار المنتج، تحليل البيانات، والاسكيل ببساطة وبعمق. دلوقتي بعمل حملاتي بنفسي وبنجح."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-author-info">
+                        <h4>سارة علي</h4>
+                        <span>مدربة تسويق إلكتروني</span>
+                    </div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- رأي 3 -->
+            <div class="testimonial-card reveal">
+                <i class="fas fa-quote-right testimonial-quote-icon"></i>
+                <p class="testimonial-text">"أنا بشتغل مع محمد من 2023، ومن ساعتها حملاتي على فيسبوك وتيك توك بتجيب عملاء حقيقيين مش مجرد لايكات. الراجل ده بيفهم في البيانات بجد."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-author-info">
+                        <h4>كريم حسن</h4>
+                        <span>مدير تسويق - براند ملابس</span>
+                    </div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 7. التواصل (Call to Action) -->
     <!-- ========================================== -->
     <section id="contact">
         <div class="contact-section reveal">
             <h2>جاهز تنقل براندك لمستوى تاني؟</h2>
             <p>لو عايز إعلانات بتجيب أرباح حقيقية، أو محتاج تدريب شخصي يخليك محترف.. تواصل معي دلوقتي.</p>
+            
+            <!-- أزرار الواتساب والإيميل (بتنزل تحت بعضها في الموبايل) -->
             <div class="contact-buttons" style="margin-bottom: 30px;">
                 <a href="https://wa.me/201008989072" target="_blank" class="btn btn-primary" style="background: #25d366; color: white;">
                     <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> واتساب
@@ -725,7 +869,9 @@
                     <i class="fas fa-envelope"></i> إيميل
                 </a>
             </div>
-            <div class="contact-buttons">
+            
+            <!-- ✅ أيقونات السوشيال (جنب بعضها دايماً) -->
+            <div class="contact-buttons social-icons-wrap">
                 <a href="https://www.facebook.com/share/1EysgMxxCS/" target="_blank" class="btn-social"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://tiktok.com/@hreezstudio" target="_blank" class="btn-social"><i class="fab fa-tiktok"></i></a>
                 <a href="https://www.instagram.com/mohamed.hreez?dlrf=Y3d6cm5rYWV0anlz" target="_blank" class="btn-social"><i class="fab fa-instagram"></i></a>
@@ -742,7 +888,7 @@
         /* 1. مؤشر الماوس المخصص + الموجات الصوتية */
         /* ========================================== */
         const cursor = document.getElementById('customCursor');
-        const hoverElements = document.querySelectorAll('a, button, .glass-card, .btn, .lab-btn, .radar-btn');
+        const hoverElements = document.querySelectorAll('a, button, .glass-card, .btn, .lab-btn, .radar-btn, .testimonial-card');
 
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
@@ -758,7 +904,7 @@
         document.addEventListener('click', (e) => {
             const wave = document.createElement('div');
             wave.classList.add('sound-wave');
-            wave.style.left = (e.clientX - 150) + 'px'; // 150 = نصف القطر النهائي
+            wave.style.left = (e.clientX - 150) + 'px';
             wave.style.top = (e.clientY - 150) + 'px';
             document.body.appendChild(wave);
             setTimeout(() => wave.remove(), 800);
@@ -793,7 +939,7 @@
                 this.color = Math.random() > 0.7 ? 'rgba(255, 215, 0, 0.8)' : (Math.random() > 0.5 ? 'rgba(0, 243, 255, 0.6)' : 'rgba(255, 255, 255, 0.5)');
             }
             update() {
-                this.z -= scrollSpeed; // Warp Speed effect
+                this.z -= scrollSpeed;
                 if (this.z <= 0) {
                     this.reset();
                     this.z = 1000;
@@ -822,17 +968,15 @@
             mouse.y = e.clientY;
         });
 
-        // ربط سرعة الـ Warp بالـ Scroll
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = winScroll / height;
-            scrollSpeed = scrolled * 15; // سرعة الـ warp
+            scrollSpeed = scrolled * 15;
         });
 
         function animateCanvas() {
             ctx.clearRect(0, 0, width, height);
-            // إضافة تأثير الـ Warp على الخلفية
             ctx.fillStyle = 'rgba(1, 0, 8, 0.3)';
             ctx.fillRect(0, 0, width, height);
             
@@ -855,7 +999,7 @@
         };
 
         /* ========================================== */
-        /* 4. تأثير الظهور عند التمرير */
+        /* 4. تأثير الظهور */
         /* ========================================== */
         const reveals = document.querySelectorAll(".reveal");
         const revealObserver = new IntersectionObserver((entries) => {
@@ -888,7 +1032,7 @@
         setTimeout(typeWriter, 500);
 
         /* ========================================== */
-        /* 6. تفعيل 3D Tilt (للكمبيوتر فقط) */
+        /* 6. تفعيل 3D Tilt */
         /* ========================================== */
         if (window.innerWidth > 900) {
             VanillaTilt.init(document.querySelectorAll(".tilt-3d"), {
@@ -934,7 +1078,7 @@
         });
 
         /* ========================================== */
-        /* 8. مختبر الإعلانات (Cracked Glass) */
+        /* 8. مختبر الإعلانات */
         /* ========================================== */
         const labBtn = document.getElementById('labBtn');
         const labContainer = document.getElementById('labContainer');
@@ -952,7 +1096,6 @@
                 if (isClicked) return;
                 isClicked = true;
 
-                // تأثير كسر الزجاج (بسيط)
                 labContainer.style.transform = 'scale(1.02)';
                 setTimeout(() => labContainer.style.transform = 'scale(1)', 200);
 
