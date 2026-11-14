@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- مكتبة 3D Tilt -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
     <style>
@@ -69,6 +68,17 @@
         }
         .reveal-3d.active { opacity: 1; transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1); }
 
+        /* === تأثير الظهور المتتالي للكروت (Staggered) === */
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        .stagger-item.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* === القسم الرئيسي === */
         header {
             min-height: 100vh; display: flex; align-items: center; justify-content: center;
@@ -99,42 +109,21 @@
         }
 
         /* ========================================== */
-        /* === حاوية الصورة (300x300 بالظبط) === */
+        /* === حاوية الصورة (300x300 ثابتة) === */
         /* ========================================== */
         .hero-image {
-            flex: 1; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            position: relative; 
-            
-            /* المقاس اللي أنت طلبته بالظبط */
-            width: 300px;
-            height: 300px;
-            min-width: 300px;
-            min-height: 300px;
-            
-            /* إزالة أي حركة أو تحويل */
-            transform: none;
-            animation: none;
+            flex: 1; display: flex; justify-content: center; align-items: center;
+            position: relative; width: 300px; height: 300px;
+            min-width: 300px; min-height: 300px;
+            transform: none; animation: none;
         }
 
         .hero-image img {
-            /* الحل: نستخدم calc عشان الفريم يبقى جوه المساحة بالظبط */
-            width: calc(300px - 4px); /* 4px للفريم (2px من كل ناحية) */
-            height: calc(300px - 4px);
-            
-            border-radius: 30px; 
-            object-fit: cover; 
+            width: calc(300px - 4px); height: calc(300px - 4px);
+            border-radius: 30px; object-fit: cover; 
             border: 2px solid rgba(212, 175, 55, 0.5);
             box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 40px rgba(212, 175, 55, 0.3);
-            
-            /* إلغاء أي حركة أو تحويل */
-            transform: none;
-            animation: none;
-            transition: none;
-            
-            /* عشان الفريم يبقى جوه المساحة */
+            transform: none; animation: none; transition: none;
             box-sizing: border-box;
         }
 
@@ -216,10 +205,7 @@
             background: #111; border-radius: 30px; border: 2px solid #333;
             overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 50px rgba(0,0,0,0.8);
             transition: all 0.5s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
 
         .lab-container.loss { border-color: #ff3333; box-shadow: 0 0 40px rgba(255, 51, 51, 0.2), inset 0 0 50px rgba(255, 0, 0, 0.1); }
@@ -256,43 +242,21 @@
 
         /* === المؤشرات الصغيرة === */
         .mini-charts-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.5s ease 0.8s;
-            width: 100%;
+            display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;
+            opacity: 0; transform: translateY(10px);
+            transition: all 0.5s ease 0.8s; width: 100%;
         }
 
-        .lab-container.win .mini-charts-row {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .lab-container.win .mini-charts-row { opacity: 1; transform: translateY(0); }
 
         .mini-chart-item {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 8px 15px;
-            text-align: center;
-            min-width: 90px;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px; padding: 8px 15px; text-align: center; min-width: 90px;
         }
 
-        .mini-chart-item .label-en {
-            font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
-            letter-spacing: 1px; display: block; margin-bottom: 2px;
-        }
-
-        .mini-chart-item .label-ar {
-            font-size: 0.65rem; color: var(--text-muted); display: block; margin-bottom: 5px;
-        }
-
-        .mini-chart-item .value {
-            font-size: 1.1rem; font-weight: 900; color: var(--gold);
-        }
-
+        .mini-chart-item .label-en { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; display: block; margin-bottom: 2px; }
+        .mini-chart-item .label-ar { font-size: 0.65rem; color: var(--text-muted); display: block; margin-bottom: 5px; }
+        .mini-chart-item .value { font-size: 1.1rem; font-weight: 900; color: var(--gold); }
         .mini-chart-item.cpa .value { color: #ff3333; }
         .mini-chart-item.growth .value { color: var(--green); }
 
@@ -358,7 +322,7 @@
         .radar-btn-new:hover { background: var(--green); color: #000; transform: scale(1.05); animation: none; }
         .radar-btn-new.clicked { background: var(--green); color: #000; border-color: var(--green); animation: none; box-shadow: 0 0 30px rgba(37, 211, 102, 0.6); }
 
-        /* === أرقام وإحصائيات === */
+        /* === الأرقام والإحصائيات === */
         .stats-section {
             display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
             padding: 60px 20px; background: rgba(255,255,255,0.02);
@@ -375,9 +339,7 @@
             border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 30px; padding: 60px 20px;
             position: relative; overflow: hidden;
             box-shadow: inset 0 0 50px rgba(212, 175, 55, 0.1), 0 20px 50px rgba(0,0,0,0.5);
-            transform-style: preserve-3d;
-            max-width: 1000px;
-            margin: 0 auto;
+            transform-style: preserve-3d; max-width: 1000px; margin: 0 auto;
         }
         .contact-section h2 { font-size: 2rem; margin-bottom: 20px; color: #fff; transform: translateZ(30px); }
         .contact-section p { color: var(--text-muted); margin-bottom: 30px; transform: translateZ(20px); }
@@ -408,11 +370,8 @@
             .hero-content { flex-direction: column-reverse; text-align: center; gap: 30px; }
             .hero-text h1 { font-size: 2.5rem; }
             .hero-text p { margin: 0 auto 30px; }
-            
-            /* تصغير الحاوية في الموبايل */
             .hero-image { width: 250px; height: 250px; min-width: 250px; min-height: 250px; }
             .hero-image img { width: calc(250px - 4px); height: calc(250px - 4px); }
-            
             .why-me-box p { font-size: 1rem; }
             .why-icons { gap: 15px; }
             .why-icon-item i { font-size: 2rem; }
@@ -448,7 +407,7 @@
     </a>
 
     <!-- ========================================== -->
-    <!-- 1. الهيدر -->
+    <!-- 1. الهيدر (المشكلة + الحل السريع) -->
     <!-- ========================================== -->
     <header>
         <div class="hero-content">
@@ -473,7 +432,7 @@
     </header>
 
     <!-- ========================================== -->
-    <!-- 2. ليه تختارني -->
+    <!-- 2. ليه تختارني (الحل) -->
     <!-- ========================================== -->
     <section class="why-me-section reveal-3d">
         <h2 class="section-title">ليه تختارني <span>كشريك نجاح؟</span></h2>
@@ -502,27 +461,27 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 3. الخدمات -->
+    <!-- 3. الخدمات (إيه اللي هتقدمه) -->
     <!-- ========================================== -->
     <section id="services">
         <h2 class="section-title reveal-3d">خدماتي <span>الاحترافية</span></h2>
         <div class="services-grid">
-            <div class="service-card reveal-3d tilt-3d">
+            <div class="service-card stagger-item tilt-3d">
                 <i class="fas fa-bullseye"></i>
                 <h3>الميديا باينج</h3>
                 <p>إطلاق وإدارة حملات إعلانية على فيسبوك، انستجرام، وتيك توك بأعلى معدل تحويل وأقل تكلفة ممكنة.</p>
             </div>
-            <div class="service-card reveal-3d tilt-3d">
+            <div class="service-card stagger-item tilt-3d">
                 <i class="fas fa-user-graduate"></i>
                 <h3>تدريب شخصي (One-to-One)</h3>
                 <p>كوتشينج فردي شامل في التجارة الإلكترونية: من اختيار المنتج، تصميم صفحة المنتج، تصميم الإعلان الصحيح، تحليل البيانات، وعمل اسكيل (Scale) ناجح لزيادة الأرباح.</p>
             </div>
-            <div class="service-card reveal-3d tilt-3d">
+            <div class="service-card stagger-item tilt-3d">
                 <i class="fas fa-chart-line"></i>
                 <h3>تحليل البيانات وتحسين الحملات</h3>
                 <p>تحليل أداء الحملات الإعلانية (Optimization) بشكل دوري، لمعرفة نقاط القوة والضعف، وتقليل تكلفة التحويل (CPA) لتحقيق أقصى عائد على الاستثمار (ROI).</p>
             </div>
-            <div class="service-card reveal-3d tilt-3d">
+            <div class="service-card stagger-item tilt-3d">
                 <i class="fas fa-chart-pie"></i>
                 <h3>التسويق الإلكتروني</h3>
                 <p>بناء استراتيجيات تسويق متكاملة لزيادة الوعي بعلامتك التجارية والوصول إلى الجمهور المستهدف بدقة.</p>
@@ -531,7 +490,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 4. الأدوات التفاعلية -->
+    <!-- 4. الأدوات التفاعلية (الإبهار) -->
     <!-- ========================================== -->
     
     <!-- مختبر الإعلانات -->
@@ -603,16 +562,16 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 5. الأرقام والإحصائيات -->
+    <!-- 5. الأرقام والإحصائيات (الدليل) -->
     <!-- ========================================== -->
     <div class="stats-section reveal-3d">
-        <div class="stat-item"><h3 class="counter" data-target="3">0</h3><p>سنوات خبرة</p></div>
+        <div class="stat-item"><h3 class="counter" data-target="4">0</h3><p>سنوات خبرة</p></div>
         <div class="stat-item"><h3 class="counter" data-target="50">0</h3><p>+ عميل سعيد</p></div>
         <div class="stat-item"><h3 class="counter" data-target="100">0</h3><p>+ حملة ناجحة</p></div>
     </div>
 
     <!-- ========================================== -->
-    <!-- 6. التواصل -->
+    <!-- 6. التواصل (القرار) -->
     <!-- ========================================== -->
     <section id="contact" class="reveal-3d">
         <div class="contact-section">
@@ -663,7 +622,23 @@
         window.addEventListener("scroll", reveal);
         reveal(); 
 
-        // 3. حركة الأرقام
+        // 3. تأثير الظهور المتتالي للكروت (Staggered Reveal)
+        const staggerItems = document.querySelectorAll(".stagger-item");
+        const staggerObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // إضافة تأخير بسيط لكل كارت عشان يظهر ورا التاني
+                    setTimeout(() => {
+                        entry.target.classList.add("active");
+                    }, index * 150); // 150ms تأخير لكل كارت
+                    staggerObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        staggerItems.forEach(item => staggerObserver.observe(item));
+
+        // 4. حركة الأرقام
         const counters = document.querySelectorAll('.counter');
         const speed = 200; 
         const animateCounters = () => {
@@ -694,7 +669,7 @@
             counterObserver.observe(section);
         });
 
-        // 4. تفعيل مكتبة 3D Tilt على الكروت (للكمبيوتر فقط)
+        // 5. تفعيل مكتبة 3D Tilt على الكروت (للكمبيوتر فقط)
         if (window.innerWidth > 900) {
             VanillaTilt.init(document.querySelectorAll(".tilt-3d"), {
                 max: 15,
@@ -705,7 +680,7 @@
             });
         }
 
-        // 5. مختبر الإعلانات + المؤشرات
+        // 6. مختبر الإعلانات + المؤشرات
         const labBtn = document.getElementById('labBtn');
         const labContainer = document.querySelector('.lab-container');
         const labTitle = document.getElementById('labTitle');
@@ -780,7 +755,7 @@
             });
         }
 
-        // 6. سيكشن رادار العملاء
+        // 7. سيكشن رادار العملاء
         const radarBtn = document.getElementById('radarBtn');
         const radarScreen = document.getElementById('radarScreen');
         const radarInfo = document.getElementById('radarInfo');
