@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محمد حريز | خبير ميديا باينج وتسويق إلكتروني</title>
+    <meta name="description" content="محمد حريز (Hreez Studio)، خبير في الميديا باينج، التجارة الإلكترونية والدروب شيبينج. خبرة منذ 2022. شريك نجاحك للوصول للريادة.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- مكتبة 3D Tilt -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <style>
+        /* === الإعدادات === */
+        :root {
+            --bg-dark: #020205;
+            --gold: #d4af37;
+            --gold-glow: rgba(212, 175, 55, 0.6);
+            --green: #25d366;
+            --green-glow: rgba(37, 211, 102, 0.6);
+            --text-main: #ffffff;
+            --text-muted: #b0b0c0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* === خلفية الفضاء === */
+        .space-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            overflow: hidden;
+        }
+
+        .stars {
+            width: 2px; height: 2px; background: transparent;
+            box-shadow: 
+                100px 200px #fff, 500px 800px #fff, 300px 400px #fff, 700px 100px #fff, 
+                200px 600px #fff, 800px 500px #fff, 400px 900px #fff, 900px 300px #fff;
+            position: absolute; top: 0; left: 0;
+            animation: twinkle 4s infinite alternate;
+        }
+
+        @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        /* === شريط التقدم === */
+        #progress-bar {
+            position: fixed; top: 0; left: 0; height: 4px;
+            background: var(--gold); width: 0%; z-index: 1000;
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        /* === تأثيرات الدخول 3D === */
+        .reveal-3d {
+            opacity: 0;
+            transform: perspective(1000px) rotateX(-20deg) translateY(100px) scale(0.9);
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .reveal-3d.active { opacity: 1; transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1); }
+
+        /* === القسم الرئيسي === */
+        header {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 40px 20px; perspective: 1000px;
+        }
+
+        .hero-content {
+            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1100px; width: 100%; gap: 40px; transform-style: preserve-3d;
+        }
+
+        .hero-text { flex: 1; z-index: 2; }
+
+        .hero-text h1 {
+            font-size: 3.5rem; font-weight: 900; margin-bottom: 10px; line-height: 1.2;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+            transform: translateZ(50px);
+        }
+        .hero-text h1 span { color: var(--gold); }
+        
+        .hero-text h2 {
+            font-size: 1.5rem; color: var(--text-muted); margin-bottom: 25px; font-weight: 600;
+            transform: translateZ(30px);
+        }
+        .hero-text p {
+            font-size: 1.1rem; margin-bottom: 35px; line-height: 1.8; color: #ccc; max-width: 500px;
+            transform: translateZ(20px);
+        }
+
+        /* ========================================== */
+        /* === حاوية الصورة (مربعة 100%) === */
+        /* ========================================== */
+        .hero-image {
+            flex: 1; 
+            display: flex; 
+            justify-content: center; 
+            position: relative; 
+            transform-style: preserve-3d;
+            
+            /* الحل: العرض 320 والارتفاع 320 مع aspect-ratio يضمن المربع */
+            width: 320px;
+            height: 320px;
+            aspect-ratio: 1 / 1;
+            min-width: 320px;
+            min-height: 320px;
+        }
+
+        .image-note {
+            position: absolute; top: -30px; background: #ff3333; color: #fff;
+            padding: 5px 15px; border-radius: 5px; font-size: 0.9rem; font-weight: 700;
+            z-index: 10; display: none; animation: pulseNote 2s infinite;
+        }
+
+        @keyframes pulseNote { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        .hero-image img {
+            width: 100%; 
+            height: 100%; 
+            border-radius: 30px; 
+            object-fit: cover;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 40px rgba(212, 175, 55, 0.3);
+            position: relative; 
+            z-index: 2;
+            transform: translateZ(80px) rotateY(-5deg) rotateX(5deg);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateZ(80px) translateY(0) rotateY(-5deg) rotateX(5deg); }
+            50% { transform: translateZ(80px) translateY(-20px) rotateY(5deg) rotateX(-5deg); }
+            100% { transform: translateZ(80px) translateY(0) rotateY(-5deg) rotateX(5deg); }
+        }
+
+        .hero-image::before {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background: var(--gold); border-radius: 50%; filter: blur(80px);
+            opacity: 0.4; z-index: 1; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) translateZ(-50px);
+            animation: pulse 4s infinite alternate;
+        }
+
+        @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.2; } 100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; } }
+
+        /* === الأزرار === */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 15px 35px; border-radius: 50px; text-decoration: none;
+            font-weight: 700; font-size: 1.1rem; transition: all 0.4s ease; cursor: pointer; border: none;
+            transform: translateZ(40px);
+        }
+        .btn-primary { background: var(--gold); color: #000; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4); }
+        .btn-primary:hover { transform: translateZ(50px) scale(1.05); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.6); }
+        .btn-outline { background: transparent; color: var(--gold); border: 2px solid var(--gold); }
+        .btn-outline:hover { background: var(--gold); color: #000; transform: translateZ(50px) scale(1.05); }
+
+        /* === قسم ليه تختارني === */
+        .why-me-section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; text-align: center; perspective: 1000px; }
+        .why-me-box {
+            background: rgba(20, 20, 30, 0.6); border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 30px; padding: 40px 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 30px rgba(212,175,55,0.05);
+            transform-style: preserve-3d; position: relative;
+        }
+        .why-me-box p {
+            font-size: 1.2rem; line-height: 1.8; color: #e0e0e0; font-weight: 600;
+            transform: translateZ(30px); margin-bottom: 20px;
+        }
+        .why-me-box p span.highlight { color: var(--gold); font-weight: 900; }
+        
+        /* الأيقونات داخل ليه تختارني */
+        .why-icons {
+            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px;
+        }
+        .why-icon-item {
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            transform: translateZ(40px);
+        }
+        .why-icon-item i {
+            font-size: 2.5rem; color: var(--gold); text-shadow: 0 0 15px var(--gold-glow);
+        }
+        .why-icon-item span {
+            font-size: 0.9rem; color: var(--text-muted); font-weight: 600;
+        }
+
+        /* === الخدمات === */
+        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; perspective: 1200px; }
+        .section-title { text-align: center; font-size: 2.5rem; font-weight: 900; margin-bottom: 50px; text-shadow: 0 0 15px rgba(255,255,255,0.1); }
+        .section-title span { color: var(--gold); }
+
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; transform-style: preserve-3d; max-width: 1000px; margin: 0 auto; }
+        
+        .service-card {
+            background: rgba(20, 20, 30, 0.8); padding: 40px 30px; border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(10px);
+            position: relative; transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .service-card i, .service-card h3, .service-card p { transform: translateZ(40px); display: block; }
+        .service-card i { font-size: 3rem; color: var(--gold); margin-bottom: 20px; text-shadow: 0 0 15px var(--gold-glow); }
+        .service-card h3 { font-size: 1.5rem; margin-bottom: 15px; color: #fff; }
+        .service-card p { color: var(--text-muted); line-height: 1.7; font-size: 1rem; }
+
+        /* === مختبر الإعلانات (المعدل) === */
+        .ad-lab-section { padding: 80px 20px; max-width: 800px; margin: 0 auto; perspective: 1000px; }
+        
+        .lab-container {
+            position: relative; width: 100%; min-height: 400px;
+            background: #111; border-radius: 30px; border: 2px solid #333;
+            overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 50px rgba(0,0,0,0.8);
+            transition: all 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lab-container.loss { border-color: #ff3333; box-shadow: 0 0 40px rgba(255, 51, 51, 0.2), inset 0 0 50px rgba(255, 0, 0, 0.1); }
+        .lab-container.loss .lab-icon { color: #ff3333; }
+        .lab-container.loss .counter-red { color: #ff3333; text-shadow: 0 0 15px rgba(255,51,51,0.8); }
+        
+        .lab-container.win { border-color: var(--gold); box-shadow: 0 0 60px rgba(212, 175, 55, 0.4), inset 0 0 50px rgba(212, 175, 55, 0.1); }
+        .lab-container.win .lab-icon { color: var(--gold); animation: bounceIcon 0.5s; }
+        .lab-container.win .counter-green { color: var(--green); text-shadow: 0 0 20px rgba(37, 211, 102, 0.8); }
+
+        .lab-content { padding: 40px 30px 10px; text-align: center; position: relative; z-index: 2; width: 100%; }
+        .lab-icon { font-size: 4rem; margin-bottom: 20px; transition: all 0.5s ease; display: inline-block; }
+        .lab-content h3 { font-size: 2rem; color: #fff; margin-bottom: 15px; transition: all 0.5s ease; }
+        .lab-content p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px; transition: all 0.5s ease; }
+        .lab-numbers { font-size: 3rem; font-weight: 900; margin-bottom: 20px; transition: all 0.5s ease; }
+
+        .lab-btn {
+            background: linear-gradient(45deg, #222, #444); color: #fff; border: 1px solid #555;
+            padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer;
+            font-weight: 700; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;
+            margin-bottom: 20px;
+        }
+        .lab-btn:hover { background: linear-gradient(45deg, #333, #555); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+
+        .glare {
+            position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-25deg); z-index: 3; pointer-events: none;
+        }
+        .glare.active { animation: shine 0.8s forwards; }
+
+        @keyframes shine { 100% { left: 200%; } }
+        @keyframes bounceIcon { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.5); } }
+
+        /* === المؤشرات الصغيرة فوق الرقم === */
+        .mini-charts-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease 0.8s;
+            width: 100%;
+        }
+
+        .lab-container.win .mini-charts-row {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mini-chart-item {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 8px 15px;
+            text-align: center;
+            min-width: 90px;
+        }
+
+        .mini-chart-item .label-en {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .mini-chart-item .label-ar {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .mini-chart-item .value {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--gold);
+        }
+
+        .mini-chart-item.cpa .value { color: #ff3333; }
+        .mini-chart-item.growth .value { color: var(--green); }
+
+        /* === رادار العملاء === */
+        .radar-section { padding: 80px 20px; max-width: 900px; margin: 0 auto; text-align: center; perspective: 1000px; }
+        .radar-wrapper { display: flex; flex-direction: column; align-items: center; gap: 40px; }
+        .radar-container-pro {
+            position: relative; width: 350px; height: 350px;
+            background: #000; border-radius: 50%; border: 2px solid var(--green);
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.2), inset 0 0 40px rgba(37, 211, 102, 0.1);
+            overflow: hidden; transition: all 0.5s ease;
+        }
+        .radar-container-pro::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 2px, transparent 2px, transparent 4px);
+            z-index: 5; pointer-events: none;
+        }
+        .radar-circle-pro { position: absolute; border: 1px solid rgba(37, 211, 102, 0.15); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .radar-circle-pro.c1 { width: 120px; height: 120px; }
+        .radar-circle-pro.c2 { width: 240px; height: 240px; }
+        .radar-circle-pro.c3 { width: 360px; height: 360px; }
+        .radar-crosshair { position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: rgba(37, 211, 102, 0.1); transform: translateX(-50%); z-index: 1; }
+        .radar-crosshair::after { content: ''; position: absolute; top: 50%; left: 0; width: 350px; height: 1px; background: rgba(37, 211, 102, 0.1); transform: translateY(-50%); }
+        .radar-sweep {
+            position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; border-radius: 50%;
+            transform-origin: center center;
+            background: conic-gradient(from 0deg, rgba(37, 211, 102, 0.6) 0deg, rgba(37, 211, 102, 0.2) 60deg, transparent 90deg, transparent 360deg);
+            opacity: 0.5; transition: opacity 0.5s; z-index: 2; transform: translate(-50%, -50%) rotate(0deg);
+        }
+        .radar-blip {
+            position: absolute; width: 8px; height: 8px; background: var(--green);
+            border-radius: 50%; box-shadow: 0 0 10px var(--green), 0 0 20px var(--green);
+            opacity: 0; transition: opacity 0.3s; z-index: 3;
+        }
+        .radar-info-pro { text-align: center; max-width: 600px; }
+        .radar-info-pro h3 { font-size: 2rem; color: #fff; margin-bottom: 15px; transition: all 0.5s ease; }
+        .radar-info-pro p { color: var(--text-muted); margin-bottom: 25px; transition: all 0.5s ease; }
+        .radar-numbers-pro { font-size: 2.5rem; font-weight: 900; color: var(--green); margin-bottom: 25px; text-shadow: 0 0 15px rgba(37, 211, 102, 0.5); transition: all 0.5s ease; }
+        
+        .radar-container-pro.active { border-color: var(--green); box-shadow: 0 0 60px rgba(37, 211, 102, 0.4), inset 0 0 50px rgba(37, 211, 102, 0.2); }
+        .radar-container-pro.active .radar-sweep { opacity: 1; animation: spinSweep 2.5s linear infinite; }
+        @keyframes spinSweep { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+        .radar-container-pro.active .radar-blip { animation: blipFlash 2.5s infinite; }
+        @keyframes blipFlash { 0%, 100% { opacity: 0; transform: scale(0.5); } 10% { opacity: 1; transform: scale(1.2); } 20% { opacity: 1; transform: scale(1); } 80% { opacity: 0; } }
+        .radar-info-pro.active h3 { color: var(--green); text-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
+
+        /* === زرار الرادار (لافت) === */
+        .radar-btn-new {
+            background: transparent; color: var(--green); border: 2px solid var(--green);
+            padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer;
+            font-weight: 900; transition: all 0.4s ease; display: inline-flex; align-items: center; gap: 10px;
+            position: relative; overflow: hidden;
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.3), inset 0 0 10px rgba(37, 211, 102, 0.1);
+            animation: radarPulse 2s infinite;
+        }
+        .radar-btn-new i { font-size: 1.5rem; animation: rotateIcon 3s linear infinite; }
+        @keyframes rotateIcon { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes radarPulse {
+            0% { box-shadow: 0 0 15px rgba(37, 211, 102, 0.3), inset 0 0 10px rgba(37, 211, 102, 0.1); }
+            50% { box-shadow: 0 0 30px rgba(37, 211, 102, 0.6), inset 0 0 20px rgba(37, 211, 102, 0.2); }
+            100% { box-shadow: 0 0 15px rgba(37, 211, 102, 0.3), inset 0 0 10px rgba(37, 211, 102, 0.1); }
+        }
+        .radar-btn-new:hover { background: var(--green); color: #000; transform: scale(1.05); animation: none; }
+        .radar-btn-new.clicked { background: var(--green); color: #000; border-color: var(--green); animation: none; box-shadow: 0 0 30px rgba(37, 211, 102, 0.6); }
+
+        /* === أرقام وإحصائيات === */
+        .stats-section {
+            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
+            padding: 60px 20px; background: rgba(255,255,255,0.02);
+            border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);
+            perspective: 1000px;
+        }
+        .stat-item { text-align: center; transform: translateZ(20px); }
+        .stat-item h3 { font-size: 3rem; color: var(--gold); font-weight: 900; text-shadow: 0 0 20px var(--gold-glow); }
+        .stat-item p { color: var(--text-muted); font-size: 1.1rem; font-weight: 600; }
+
+        /* === التواصل === */
+        .contact-section {
+            text-align: center; background: linear-gradient(135deg, rgba(20,20,30,0.9) 0%, rgba(5,5,10,0.9) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 30px; padding: 60px 20px;
+            position: relative; overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(212, 175, 55, 0.1), 0 20px 50px rgba(0,0,0,0.5);
+            transform-style: preserve-3d;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .contact-section h2 { font-size: 2rem; margin-bottom: 20px; color: #fff; transform: translateZ(30px); }
+        .contact-section p { color: var(--text-muted); margin-bottom: 30px; transform: translateZ(20px); }
+        .contact-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; position: relative; z-index: 2; transform-style: preserve-3d; }
+        .btn-social {
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: #fff; text-decoration: none;
+            transition: all 0.4s ease; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); transform: translateZ(20px);
+        }
+        .btn-social:hover, .btn-social:active { transform: translateZ(40px) scale(1.1); background: var(--gold); color: #000; border-color: var(--gold); box-shadow: 0 10px 20px var(--gold-glow); }
+
+        /* زر الواتساب */
+        .floating-wa {
+            position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white;
+            width: 60px; height: 60px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 1.8rem;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); z-index: 999;
+            text-decoration: none; animation: bounce 2s infinite;
+        }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-15px); } 60% { transform: translateY(-7px); } }
+
+        footer { text-align: center; padding: 30px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+
+        /* === إعدادات الموبايل === */
+        @media (max-width: 900px) {
+            .hero-content { flex-direction: column-reverse; text-align: center; gap: 30px; }
+            .hero-text h1 { font-size: 2.5rem; }
+            .hero-text p { margin: 0 auto 30px; }
+            
+            /* تصغير الحاوية في الموبايل */
+            .hero-image { width: 250px; height: 250px; min-width: 250px; min-height: 250px; }
+            
+            .why-me-box p { font-size: 1rem; }
+            .why-icons { gap: 15px; }
+            .why-icon-item i { font-size: 2rem; }
+            
+            .mini-chart-item { min-width: 70px; padding: 5px 8px; }
+            .mini-chart-item .label-en { font-size: 0.65rem; }
+            .mini-chart-item .label-ar { font-size: 0.55rem; }
+            .mini-chart-item .value { font-size: 0.9rem; }
+            
+            .radar-container-pro { width: 280px; height: 280px; }
+            .radar-circle-pro.c1 { width: 90px; height: 90px; }
+            .radar-circle-pro.c2 { width: 180px; height: 180px; }
+            .radar-circle-pro.c3 { width: 270px; height: 270px; }
+            .radar-info-pro h3 { font-size: 1.5rem; }
+            .radar-numbers-pro { font-size: 2rem; }
+            .contact-buttons { flex-direction: column; width: 100%; }
+            .contact-buttons .btn { width: 100%; }
+            .social-icons-wrap { flex-direction: row !important; flex-wrap: wrap; }
+            .stats-section { gap: 20px; }
+            .stat-item h3 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الخلفية -->
+    <div class="space-bg">
+        <div class="stars"></div>
+    </div>
+
+    <div id="progress-bar"></div>
+
+    <a href="https://wa.me/201008989072" target="_blank" class="floating-wa" aria-label="تواصل عبر واتساب">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ========================================== -->
+    <!-- 1. الهيدر (المشكلة + الحل السريع) -->
+    <!-- ========================================== -->
+    <header>
+        <div class="hero-content">
+            <div class="hero-text reveal-3d">
+                <h1>براندك بيخسر فلوس في <span>إعلانات عشوائية؟</span></h1>
+                <h2>أنا محمد حريز، بصلح ده.</h2>
+                <p>خبير ميديا باينج وتسويق إلكتروني. بساعد العلامات التجارية تحول ميزانيتها الضايعة لأرباح حقيقية، من خلال حملات مدروسة بالبيانات ومنهجية واضحة.</p>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> تعاقد معي</a>
+                    <a href="#services" class="btn btn-outline"><i class="fas fa-briefcase"></i> خدماتي</a>
+                </div>
+            </div>
+            
+            <div class="hero-image reveal-3d">
+                <!-- ======================================================= -->
+                <!-- 👇 ضع رابط صورتك هنا (بدل YOUR_IMAGE_LINK_HERE.jpg) 👇 -->
+                <!-- ======================================================= -->
+                <div class="image-note" id="imageNote">⚠️ ضع رابط صورتك هنا</div>
+                <img src="YOUR_IMAGE_LINK_HERE.jpg" alt="محمد حريز - Media Buyer" id="profilePic">
+                <!-- ======================================================= -->
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- 2. ليه تختارني -->
+    <!-- ========================================== -->
+    <section class="why-me-section reveal-3d">
+        <h2 class="section-title">ليه تختارني <span>كشريك نجاح؟</span></h2>
+        <div class="why-me-box">
+            <p>مش بس بعمل حملات إعلانية، أنا بشتغل <span class="highlight">كشريك نجاح ليك</span>. بدرس جمهورك، بحلل منافسينك، وبصمم حملات بتجيب <span class="highlight">عملاء حقيقيين</span> وبتزود أرباحك.</p>
+            
+            <div class="why-icons">
+                <div class="why-icon-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>البيانات أولاً</span>
+                </div>
+                <div class="why-icon-item">
+                    <i class="fas fa-bullseye"></i>
+                    <span>استهداف دقيق</span>
+                </div>
+                <div class="why-icon-item">
+                    <i class="fas fa-handshake"></i>
+                    <span>شريك نجاح</span>
+                </div>
+                <div class="why-icon-item">
+                    <i class="fas fa-rocket"></i>
+                    <span>نمو حقيقي</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. الخدمات -->
+    <!-- ========================================== -->
+    <section id="services">
+        <h2 class="section-title reveal-3d">خدماتي <span>الاحترافية</span></h2>
+        <div class="services-grid">
+            <!-- تم إضافة كلاس tilt-3d للكروت -->
+            <div class="service-card reveal-3d tilt-3d">
+                <i class="fas fa-bullseye"></i>
+                <h3>الميديا باينج</h3>
+                <p>إطلاق وإدارة حملات إعلانية على فيسبوك، انستجرام، وتيك توك بأعلى معدل تحويل وأقل تكلفة ممكنة.</p>
+            </div>
+            <div class="service-card reveal-3d tilt-3d">
+                <i class="fas fa-user-graduate"></i>
+                <h3>تدريب شخصي (One-to-One)</h3>
+                <p>كوتشينج فردي شامل في التجارة الإلكترونية: من اختيار المنتج، تصميم صفحة المنتج، تصميم الإعلان الصحيح، تحليل البيانات، وعمل اسكيل (Scale) ناجح لزيادة الأرباح.</p>
+            </div>
+            <div class="service-card reveal-3d tilt-3d">
+                <i class="fas fa-chart-line"></i>
+                <h3>تحليل البيانات وتحسين الحملات</h3>
+                <p>تحليل أداء الحملات الإعلانية (Optimization) بشكل دوري، لمعرفة نقاط القوة والضعف، وتقليل تكلفة التحويل (CPA) لتحقيق أقصى عائد على الاستثمار (ROI).</p>
+            </div>
+            <div class="service-card reveal-3d tilt-3d">
+                <i class="fas fa-chart-pie"></i>
+                <h3>التسويق الإلكتروني</h3>
+                <p>بناء استراتيجيات تسويق متكاملة لزيادة الوعي بعلامتك التجارية والوصول إلى الجمهور المستهدف بدقة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 4. الأدوات التفاعلية -->
+    <!-- ========================================== -->
+    
+    <!-- مختبر الإعلانات -->
+    <section class="ad-lab-section reveal-3d">
+        <h2 class="section-title">جرّب بنفسك.. <span>سر الإعلان الناجح</span></h2>
+        <div class="lab-container loss" id="labScreen">
+            <div class="lab-content" id="labContent">
+                <i class="fas fa-chart-line lab-icon" id="labIcon"></i>
+                <h3 id="labTitle">حملة عشوائية = خسارة</h3>
+                <p id="labText">بدون استراتيجية وبيانات دقيقة، ميزانيتك بتتبخر.</p>
+                
+                <div class="mini-charts-row">
+                    <div class="mini-chart-item">
+                        <span class="label-en">ROAS</span>
+                        <span class="label-ar">العائد</span>
+                        <span class="value" id="miniChartVal1">0x</span>
+                    </div>
+                    <div class="mini-chart-item cpa">
+                        <span class="label-en">CPA</span>
+                        <span class="label-ar">تكلفة التحويل</span>
+                        <span class="value" id="miniChartVal2">0$</span>
+                    </div>
+                    <div class="mini-chart-item growth">
+                        <span class="label-en">Growth</span>
+                        <span class="label-ar">النمو</span>
+                        <span class="value" id="miniChartVal3">0%</span>
+                    </div>
+                </div>
+
+                <div class="lab-numbers" id="labNumbers">
+                    <span class="counter-red">- 0 ج.م</span>
+                </div>
+                <button class="lab-btn" id="labBtn">
+                    <i class="fas fa-bolt"></i> شغّل الإعلان الصح
+                </button>
+            </div>
+            <div class="glare" id="glare"></div>
+        </div>
+    </section>
+
+    <!-- رادار العملاء -->
+    <section class="radar-section reveal-3d">
+        <h2 class="section-title">اكتشف <span>جمهورك المستهدف</span></h2>
+        <div class="radar-wrapper">
+            <div class="radar-container-pro" id="radarScreen">
+                <div class="radar-circle-pro c1"></div>
+                <div class="radar-circle-pro c2"></div>
+                <div class="radar-circle-pro c3"></div>
+                <div class="radar-crosshair"></div>
+                <div class="radar-sweep" id="radarSweep"></div>
+                
+                <div class="radar-blip" style="top: 30%; left: 40%; animation-delay: 0.5s;"></div>
+                <div class="radar-blip" style="top: 60%; left: 70%; animation-delay: 1.2s;"></div>
+                <div class="radar-blip" style="top: 70%; left: 30%; animation-delay: 0.8s;"></div>
+                <div class="radar-blip" style="top: 40%; left: 80%; animation-delay: 1.8s;"></div>
+                <div class="radar-blip" style="top: 80%; left: 60%; animation-delay: 1.5s;"></div>
+                <div class="radar-blip" style="top: 20%; left: 60%; animation-delay: 2.2s;"></div>
+            </div>
+
+            <div class="radar-info-pro" id="radarInfo">
+                <h3 id="radarTitle">جمهورك مستخبي.. وإعلانك مش واصله!</h3>
+                <p id="radarText">من غير بيانات دقيقة، إعلاناتك بتروح لناس مش مهتمة.</p>
+                <div class="radar-numbers-pro" id="radarNumbers"><span>0 عميل محتمل</span></div>
+                <button class="radar-btn-new" id="radarBtn">
+                    <i class="fas fa-satellite-dish"></i> فعّل الرادار
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 5. الأرقام والإحصائيات -->
+    <!-- ========================================== -->
+    <div class="stats-section reveal-3d">
+        <div class="stat-item"><h3 class="counter" data-target="3">0</h3><p>سنوات خبرة</p></div>
+        <div class="stat-item"><h3 class="counter" data-target="50">0</h3><p>+ عميل سعيد</p></div>
+        <div class="stat-item"><h3 class="counter" data-target="100">0</h3><p>+ حملة ناجحة</p></div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 6. التواصل -->
+    <!-- ========================================== -->
+    <section id="contact" class="reveal-3d">
+        <div class="contact-section">
+            <h2>جاهز تنقل براندك لمستوى تاني؟</h2>
+            <p>لو عايز إعلانات بتجيب أرباح حقيقية، أو محتاج تدريب شخصي يخليك محترف.. تواصل معي دلوقتي.</p>
+            <div class="contact-buttons" style="margin-bottom: 40px;">
+                <a href="https://wa.me/201008989072" target="_blank" class="btn btn-primary" style="background: #25d366; color: white;">
+                    <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> واتساب
+                </a>
+                <a href="mailto:mhreez88@gmail.com" class="btn btn-outline">
+                    <i class="fas fa-envelope"></i> إيميل
+                </a>
+            </div>
+            <h3 style="margin-bottom: 20px; color: var(--text-muted); font-weight: 400;">تابعني على:</h3>
+            <div class="contact-buttons social-icons-wrap">
+                <a href="https://www.facebook.com/share/1EysgMxxCS/" target="_blank" class="btn-social"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://tiktok.com/@hreezstudio" target="_blank" class="btn-social"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/mohamed.hreez?dlrf=Y3d6cm5rYWV0anlz" target="_blank" class="btn-social"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 محمد حريز | Hreez Studio. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        // 1. شريط التقدم
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // 2. تأثير الظهور 3D
+        const reveals = document.querySelectorAll(".reveal-3d");
+        function reveal() {
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); 
+
+        // 3. حركة الأرقام
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200; 
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 20);
+                    } else {
+                        counter.innerText = target + (target > 10 ? '+' : '');
+                    }
+                };
+                updateCount();
+            });
+        }
+        let counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.stats-section').forEach(section => {
+            counterObserver.observe(section);
+        });
+
+        // 4. تفعيل مكتبة 3D Tilt على الكروت (للكمبيوتر فقط)
+        if (window.innerWidth > 900) {
+            VanillaTilt.init(document.querySelectorAll(".tilt-3d"), {
+                max: 15,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.2,
+                scale: 1.05
+            });
+        }
+
+        // 5. مختبر الإعلانات + المؤشرات
+        const labBtn = document.getElementById('labBtn');
+        const labContainer = document.querySelector('.lab-container');
+        const labTitle = document.getElementById('labTitle');
+        const labText = document.getElementById('labText');
+        const labNumbers = document.getElementById('labNumbers');
+        const labIcon = document.getElementById('labIcon');
+        const glare = document.getElementById('glare');
+        const miniChartVal1 = document.getElementById('miniChartVal1');
+        const miniChartVal2 = document.getElementById('miniChartVal2');
+        const miniChartVal3 = document.getElementById('miniChartVal3');
+        let isClicked = false;
+
+        if (labBtn) {
+            labBtn.addEventListener('click', () => {
+                if (isClicked) return;
+                isClicked = true;
+
+                glare.classList.add('active');
+                labContainer.classList.remove('loss');
+                labContainer.classList.add('win');
+                labIcon.classList.remove('fa-chart-line');
+                labIcon.classList.add('fa-rocket');
+
+                labTitle.innerHTML = 'استراتيجية حريز = <span style="color: var(--gold);">أرباح</span>';
+                labText.innerHTML = 'بيانات دقيقة، تصميم إعلاني قاتل، وعائد استثمار (ROI) بيضرب.';
+                labBtn.innerHTML = '<i class="fas fa-check"></i> تم التحويل!';
+                labBtn.style.background = 'var(--gold)';
+                labBtn.style.color = '#000';
+
+                let currentVal = 0;
+                const targetVal = 10000;
+                const duration = 1500;
+                const startTime = performance.now();
+
+                function updateNumber(currentTime) {
+                    const elapsedTime = currentTime - startTime;
+                    const progress = Math.min(elapsedTime / duration, 1);
+                    currentVal = Math.floor(progress * targetVal);
+                    if (progress < 1) {
+                        labNumbers.innerHTML = `<span class="counter-green">+ ${currentVal.toLocaleString()} ج.م</span>`;
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        labNumbers.innerHTML = `<span class="counter-green">+ ${targetVal.toLocaleString()} ج.م</span>`;
+                    }
+                }
+                requestAnimationFrame(updateNumber);
+
+                let roasVal = 0;
+                const roasInterval = setInterval(() => {
+                    roasVal += 0.1;
+                    miniChartVal1.textContent = roasVal.toFixed(1) + 'x';
+                    if (roasVal >= 4.5) clearInterval(roasInterval);
+                }, 50);
+
+                let cpaVal = 10;
+                const cpaInterval = setInterval(() => {
+                    cpaVal -= 0.15;
+                    if(cpaVal <= 2.5) cpaVal = 2.5;
+                    miniChartVal2.textContent = cpaVal.toFixed(1) + '$';
+                    if (cpaVal <= 2.5) clearInterval(cpaInterval);
+                }, 50);
+
+                let growthVal = 0;
+                const growthInterval = setInterval(() => {
+                    growthVal += 2;
+                    if(growthVal >= 120) growthVal = 120;
+                    miniChartVal3.textContent = growthVal + '%';
+                    if (growthVal >= 120) clearInterval(growthInterval);
+                }, 30);
+
+                if (navigator.vibrate) navigator.vibrate(100);
+            });
+        }
+
+        // 6. سيكشن رادار العملاء
+        const radarBtn = document.getElementById('radarBtn');
+        const radarScreen = document.getElementById('radarScreen');
+        const radarInfo = document.getElementById('radarInfo');
+        const radarTitle = document.getElementById('radarTitle');
+        const radarText = document.getElementById('radarText');
+        const radarNumbers = document.getElementById('radarNumbers');
+        let isRadarActive = false;
+
+        if (radarBtn) {
+            radarBtn.addEventListener('click', () => {
+                if (isRadarActive) return;
+                isRadarActive = true;
+
+                radarScreen.classList.add('active');
+                radarInfo.classList.add('active');
+                radarBtn.classList.add('clicked');
+                
+                radarTitle.innerHTML = '🎯 جمهورك المستهدف اتحدد!';
+                radarText.innerHTML = 'البيانات بتاعتنا وصلتك للعميل الصح، في الوقت الصح.';
+                radarBtn.innerHTML = '<i class="fas fa-check"></i> تم التحديد!';
+                radarBtn.style.animation = 'none';
+
+                let currentVal = 0;
+                const targetVal = 10000;
+                const duration = 2000;
+                const startTime = performance.now();
+
+                function updateNumber(currentTime) {
+                    const elapsedTime = currentTime - startTime;
+                    const progress = Math.min(elapsedTime / duration, 1);
+                    currentVal = Math.floor(progress * targetVal);
+                    if (progress < 1) {
+                        radarNumbers.innerHTML = `<span>+ ${currentVal.toLocaleString()} عميل محتمل</span>`;
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        radarNumbers.innerHTML = `<span>+ ${targetVal.toLocaleString()} عميل محتمل</span>`;
+                    }
+                }
+                requestAnimationFrame(updateNumber);
+                if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            });
+        }
+
+        // 7. إظهار الملحوظة الحمراء لو الصورة لسه ماتحطتش
+        const profilePic = document.getElementById('profilePic');
+        const imageNote = document.getElementById('imageNote');
+        
+        if (profilePic && profilePic.src.includes('YOUR_IMAGE_LINK_HERE.jpg')) {
+            imageNote.style.display = 'block';
+            profilePic.style.opacity = '0.3';
+            profilePic.style.border = '2px dashed #ff3333';
+        } else if (profilePic) {
+            imageNote.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
