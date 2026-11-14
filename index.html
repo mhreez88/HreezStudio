@@ -14,9 +14,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
     <style>
-        /* ========================================== */
-        /* === الإعدادات والكون الأساسي === */
-        /* ========================================== */
         :root {
             --bg-deep: #010008;
             --gold: #ffd700;
@@ -26,7 +23,8 @@
             --purple: #9d00ff;
             --text-main: #ffffff;
             --text-muted: #8a8a9a;
-            --glass-bg: rgba(255, 255, 255, 0.03);
+            /* ✅ استبدال الـ Glassmorphism بخلفية بسيطة أسرع */
+            --glass-bg: rgba(20, 20, 30, 0.6);
             --glass-border: rgba(255, 255, 255, 0.08);
         }
 
@@ -39,6 +37,8 @@
             overflow-x: hidden;
             position: relative;
             cursor: none;
+            /* ✅ منع أي تأخير في الرسم */
+            -webkit-font-smoothing: antialiased;
         }
 
         #cosmic-canvas {
@@ -86,14 +86,11 @@
 
         .reveal {
             opacity: 0;
-            transform: translateY(60px) scale(0.95);
-            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(40px) scale(0.98);
+            transition: all 0.8s ease-out;
         }
         .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
 
-        /* ========================================== */
-        /* === القسم الرئيسي (Hero) === */
-        /* ========================================== */
         header {
             min-height: 100vh;
             display: flex; align-items: center; justify-content: center;
@@ -131,7 +128,7 @@
         .btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             padding: 15px 30px; border-radius: 50px; text-decoration: none;
-            font-weight: 700; font-size: 1rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            font-weight: 700; font-size: 1rem; transition: all 0.4s ease;
             cursor: pointer; border: none; position: relative; overflow: hidden;
             letter-spacing: 1px; flex: 1; min-width: 140px;
         }
@@ -217,9 +214,6 @@
             100% { background-position: 0 200%; }
         }
 
-        /* ========================================== */
-        /* === الأقسام العامة === */
-        /* ========================================== */
         section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
         
         .section-title {
@@ -237,16 +231,11 @@
             border-radius: 2px;
         }
 
-        /* ========================================== */
-        /* === قسم ليه تختارني (المفقود) === */
-        /* ========================================== */
         .why-me-box {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: 30px;
             padding: 50px 40px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
             text-align: center;
@@ -298,9 +287,7 @@
             transition: all 0.4s ease;
         }
 
-        .why-me-icon-item:hover {
-            transform: translateY(-5px);
-        }
+        .why-me-icon-item:hover { transform: translateY(-5px); }
 
         .why-me-icon-item i {
             font-size: 2.5rem;
@@ -308,7 +295,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 20px var(--gold-dim);
-            filter: drop-shadow(0 0 10px var(--gold-dim));
         }
 
         .why-me-icon-item span {
@@ -318,14 +304,10 @@
             letter-spacing: 1px;
         }
 
-        /* ========================================== */
-        /* === كروت الخدمات === */
-        /* ========================================== */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            perspective: 1000px;
         }
 
         .glass-card {
@@ -333,38 +315,17 @@
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 40px 30px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-style: preserve-3d;
-            animation: zeroGravity 6s ease-in-out infinite;
+            transition: all 0.4s ease;
+            /* ✅ شيلنا الـ animation المستمر عشان الأداء */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        .glass-card:nth-child(2) { animation-delay: 0.5s; }
-        .glass-card:nth-child(3) { animation-delay: 1s; }
-        .glass-card:nth-child(4) { animation-delay: 1.5s; }
-
-        @keyframes zeroGravity {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(1deg); }
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
-            opacity: 0; transition: opacity 0.4s ease;
-            pointer-events: none;
-        }
-
-        .glass-card:hover::before { opacity: 1; }
         .glass-card:hover {
-            transform: translateY(-15px) scale(1.02) !important;
+            transform: translateY(-10px);
             border-color: var(--gold-dim);
             box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px var(--gold-dim);
-            animation-play-state: paused;
         }
 
         .glass-card i {
@@ -374,35 +335,19 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
             display: inline-block;
-            text-shadow: 0 0 20px var(--gold-dim);
         }
         .glass-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: #fff; }
         .glass-card p { color: var(--text-muted); line-height: 1.8; font-size: 0.95rem; }
 
-        /* ========================================== */
-        /* === مختبر الإعلانات === */
-        /* ========================================== */
         .lab-container {
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 50px 30px;
-            backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
             text-align: center;
         }
-
-        .crack-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/cracked-glass.png');
-            opacity: 0.3;
-            pointer-events: none;
-            z-index: 4;
-            transition: opacity 0.5s ease;
-        }
-        .lab-container.win .crack-overlay { opacity: 0; }
 
         .lab-container::before {
             content: '';
@@ -451,9 +396,6 @@
         .mini-chart-item.cpa .value { color: #ff3333; }
         .mini-chart-item.growth .value { color: var(--gold); }
 
-        /* ========================================== */
-        /* === رادار العملاء === */
-        /* ========================================== */
         .radar-wrapper { display: flex; flex-direction: column; align-items: center; gap: 40px; }
         
         .radar-container {
@@ -516,9 +458,6 @@
         .radar-btn i { animation: rotateIcon 3s linear infinite; }
         @keyframes rotateIcon { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* ========================================== */
-        /* === الأرقام والإحصائيات === */
-        /* ========================================== */
         .stats-grid {
             display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
             padding: 60px 20px;
@@ -532,18 +471,13 @@
             background: linear-gradient(135deg, var(--gold), var(--cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px var(--gold-dim);
         }
         .stat-item p { color: var(--text-muted); font-size: 1rem; font-weight: 600; letter-spacing: 1px; }
 
-        /* ========================================== */
-        /* === آراء العملاء === */
-        /* ========================================== */
         .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            perspective: 1000px;
         }
 
         .testimonial-card {
@@ -551,7 +485,6 @@
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 40px 30px;
-            backdrop-filter: blur(20px);
             position: relative;
             transition: all 0.4s ease;
         }
@@ -605,29 +538,18 @@
             margin-left: auto;
         }
 
-        /* ========================================== */
-        /* === التواصل === */
-        /* ========================================== */
         .contact-section {
             text-align: center;
-            background: rgba(255,255,255,0.02);
+            background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: 30px;
             padding: 80px 30px;
-            backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
         }
-        .contact-section::before {
-            content: ''; position: absolute; top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, var(--gold-dim), transparent 60%);
-            opacity: 0.1; animation: rotateBg 20s linear infinite;
-        }
-        @keyframes rotateBg { 100% { transform: rotate(360deg); } }
         
-        .contact-section h2 { font-size: 2.2rem; margin-bottom: 20px; color: #fff; position: relative; z-index: 2; }
-        .contact-section p { color: var(--text-muted); margin-bottom: 40px; position: relative; z-index: 2; }
+        .contact-section h2 { font-size: 2.2rem; margin-bottom: 20px; color: #fff; }
+        .contact-section p { color: var(--text-muted); margin-bottom: 40px; }
         
         .contact-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; position: relative; z-index: 2; }
         
@@ -661,32 +583,10 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 2rem; text-decoration: none; z-index: 999;
             box-shadow: 0 0 30px rgba(37, 211, 102, 0.5);
-            animation: waPulse 2s infinite;
-        }
-        @keyframes waPulse {
-            0% { box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
-            50% { box-shadow: 0 0 50px rgba(37, 211, 102, 0.8); }
-            100% { box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
-        }
-
-        .sound-wave {
-            position: fixed;
-            border: 2px solid var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9998;
-            animation: waveExpand 0.8s ease-out forwards;
-        }
-        @keyframes waveExpand {
-            0% { width: 0; height: 0; opacity: 1; }
-            100% { width: 300px; height: 300px; opacity: 0; }
         }
 
         footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.9rem; position: relative; z-index: 10; }
 
-        /* ========================================== */
-        /* === إعدادات الموبايل === */
-        /* ========================================== */
         @media (max-width: 900px) {
             body { cursor: auto; }
             .cursor { display: none; }
@@ -699,22 +599,12 @@
             .hologram-container { width: 240px; height: 240px; }
             
             .services-grid { grid-template-columns: 1fr; }
-            .glass-card { animation: none; }
             
             .stats-grid { gap: 30px; }
             .stat-item h3 { font-size: 2.5rem; }
             
-            .btn-group {
-                flex-direction: column;
-                width: 100%;
-                gap: 12px;
-            }
-            .btn {
-                width: 100%;
-                padding: 16px 20px;
-                font-size: 1.05rem;
-                flex: none;
-            }
+            .btn-group { flex-direction: column; width: 100%; gap: 12px; }
+            .btn { width: 100%; padding: 16px 20px; font-size: 1.05rem; flex: none; }
             
             .contact-buttons { flex-direction: column; align-items: center; }
             
@@ -748,9 +638,6 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- ========================================== -->
-    <!-- 1. الهيدر -->
-    <!-- ========================================== -->
     <header>
         <div class="hero-content">
             <div class="hero-text reveal">
@@ -771,9 +658,6 @@
         </div>
     </header>
 
-    <!-- ========================================== -->
-    <!-- 2. ليه تختارني (القسم المفقود) -->
-    <!-- ========================================== -->
     <section id="why-me">
         <h2 class="section-title reveal">ليه تختارني <span style="color: var(--gold);">كشريك نجاح؟</span></h2>
         <div class="why-me-box reveal">
@@ -802,9 +686,6 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 3. الخدمات -->
-    <!-- ========================================== -->
     <section id="services">
         <h2 class="section-title reveal">خدماتي الاحترافية</h2>
         <div class="services-grid">
@@ -831,13 +712,9 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 4. مختبر الإعلانات -->
-    <!-- ========================================== -->
     <section>
         <h2 class="section-title reveal">جرّب بنفسك.. سر الإعلان الناجح</h2>
         <div class="lab-container reveal" id="labContainer">
-            <div class="crack-overlay"></div>
             <div class="lab-content">
                 <i class="fas fa-chart-line lab-icon-main" id="labIcon"></i>
                 <h3 id="labTitle">حملة عشوائية = خسارة</h3>
@@ -871,9 +748,6 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 5. رادار العملاء -->
-    <!-- ========================================== -->
     <section>
         <h2 class="section-title reveal">اكتشف جمهورك المستهدف</h2>
         <div class="radar-wrapper reveal">
@@ -902,9 +776,6 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 6. الأرقام والإحصائيات -->
-    <!-- ========================================== -->
     <section style="padding: 0;">
         <div class="stats-grid reveal">
             <div class="stat-item"><h3 class="counter" data-target="4">0</h3><p>سنوات خبرة</p></div>
@@ -913,13 +784,9 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 7. آراء العملاء -->
-    <!-- ========================================== -->
     <section id="testimonials">
         <h2 class="section-title reveal">آراء <span style="color: var(--gold);">العملاء</span></h2>
         <div class="testimonials-grid">
-            
             <div class="testimonial-card reveal">
                 <i class="fas fa-quote-right testimonial-quote-icon"></i>
                 <p class="testimonial-text">"محمد غيّر نظرتي تماماً للإعلانات. كنت بصرف فلوس كتير من غير نتيجة، ومن أول شهر معاه الـ ROAS بتاعي تعدى 4x. شغل احترافي بجد."</p>
@@ -961,13 +828,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- 8. التواصل -->
-    <!-- ========================================== -->
     <section id="contact">
         <div class="contact-section reveal">
             <h2>جاهز تنقل براندك لمستوى تاني؟</h2>
@@ -995,320 +858,286 @@
     </footer>
 
     <script>
-        /* ========================================== */
-        /* 1. مؤشر الماوس المخصص + الموجات الصوتية */
-        /* ========================================== */
-        const cursor = document.getElementById('customCursor');
-        const hoverElements = document.querySelectorAll('a, button, .glass-card, .btn, .lab-btn, .radar-btn, .testimonial-card, .why-me-icon-item');
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                /* 1. مؤشر الماوس */
+                const cursor = document.getElementById('customCursor');
+                const hoverElements = document.querySelectorAll('a, button, .glass-card, .btn, .lab-btn, .radar-btn, .testimonial-card, .why-me-icon-item');
 
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-
-        document.addEventListener('click', (e) => {
-            const wave = document.createElement('div');
-            wave.classList.add('sound-wave');
-            wave.style.left = (e.clientX - 150) + 'px';
-            wave.style.top = (e.clientY - 150) + 'px';
-            document.body.appendChild(wave);
-            setTimeout(() => wave.remove(), 800);
-        });
-
-        /* ========================================== */
-        /* 2. خلفية Canvas الكونية */
-        /* ========================================== */
-        const canvas = document.getElementById('cosmic-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let stars = [];
-        let mouse = { x: 0, y: 0 };
-        let scrollSpeed = 0;
-
-        function resizeCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        class Star {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = (Math.random() - 0.5) * width * 2;
-                this.y = (Math.random() - 0.5) * height * 2;
-                this.z = Math.random() * 1000 + 1;
-                this.size = Math.random() * 1.5 + 0.2;
-                this.color = Math.random() > 0.7 ? 'rgba(255, 215, 0, 0.8)' : (Math.random() > 0.5 ? 'rgba(0, 243, 255, 0.6)' : 'rgba(255, 255, 255, 0.5)');
-            }
-            update() {
-                this.z -= scrollSpeed;
-                if (this.z <= 0) {
-                    this.reset();
-                    this.z = 1000;
+                if (cursor && window.innerWidth > 900) {
+                    document.addEventListener('mousemove', (e) => {
+                        cursor.style.left = e.clientX + 'px';
+                        cursor.style.top = e.clientY + 'px';
+                    });
+                    hoverElements.forEach(el => {
+                        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+                    });
                 }
-            }
-            draw() {
-                const x = (this.x / this.z) * 500 + width / 2;
-                const y = (this.y / this.z) * 500 + height / 2;
-                const size = this.size * (1 - this.z / 1000);
 
-                if (x < 0 || x > width || y < 0 || y > height) return;
+                /* 2. Canvas الكوني (خفيف جداً) */
+                const canvas = document.getElementById('cosmic-canvas');
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    let width, height;
+                    let stars = [];
+                    let scrollSpeed = 0;
+                    let lastTime = 0;
+                    const FPS = 30; // ✅ تقليل لـ 30 فريم بدل 60
 
-                ctx.beginPath();
-                ctx.arc(x, y, size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
-        }
-
-        for (let i = 0; i < 500; i++) {
-            stars.push(new Star());
-        }
-
-        document.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = winScroll / height;
-            scrollSpeed = scrolled * 15;
-        });
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = 'rgba(1, 0, 8, 0.3)';
-            ctx.fillRect(0, 0, width, height);
-            
-            stars.forEach(star => {
-                star.update();
-                star.draw();
-            });
-            requestAnimationFrame(animateCanvas);
-        }
-        animateCanvas();
-
-        /* ========================================== */
-        /* 3. شريط التقدم */
-        /* ========================================== */
-        window.onscroll = function() {
-            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            var scrolled = (winScroll / height) * 100;
-            document.getElementById("progress-bar").style.width = scrolled + "%";
-        };
-
-        /* ========================================== */
-        /* 4. تأثير الظهور */
-        /* ========================================== */
-        const reveals = document.querySelectorAll(".reveal");
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("active");
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        reveals.forEach(el => revealObserver.observe(el));
-
-        /* ========================================== */
-        /* 5. مؤثر الكتابة */
-        /* ========================================== */
-        const typewriterElement = document.getElementById('typewriter');
-        const typewriterText = typewriterElement.innerText;
-        typewriterElement.innerText = '';
-        let charIndex = 0;
-
-        function typeWriter() {
-            if (charIndex < typewriterText.length) {
-                typewriterElement.innerHTML += typewriterText.charAt(charIndex);
-                charIndex++;
-                setTimeout(typeWriter, 50);
-            } else {
-                typewriterElement.innerHTML = 'براندك بيخسر فلوس في <span style="color: var(--gold);">إعلانات عشوائية؟</span>';
-            }
-        }
-        setTimeout(typeWriter, 500);
-
-        /* ========================================== */
-        /* 6. تفعيل 3D Tilt */
-        /* ========================================== */
-        if (window.innerWidth > 900) {
-            VanillaTilt.init(document.querySelectorAll(".tilt-3d"), {
-                max: 15,
-                speed: 400,
-                glare: true,
-                "max-glare": 0.3,
-                scale: 1.02
-            });
-        }
-
-        /* ========================================== */
-        /* 7. حركة الأرقام */
-        /* ========================================== */
-        const counters = document.querySelectorAll('.counter');
-        const speed = 200;
-        const animateCounters = () => {
-            counters.forEach(counter => {
-                const updateCount = () => {
-                    const target = +counter.getAttribute('data-target');
-                    const count = +counter.innerText;
-                    const inc = target / speed;
-                    if (count < target) {
-                        counter.innerText = Math.ceil(count + inc);
-                        setTimeout(updateCount, 20);
-                    } else {
-                        counter.innerText = target + (target > 10 ? '+' : '');
+                    function resizeCanvas() {
+                        width = canvas.width = window.innerWidth;
+                        height = canvas.height = window.innerHeight;
                     }
+                    resizeCanvas();
+                    window.addEventListener('resize', resizeCanvas);
+
+                    class Star {
+                        constructor() { this.reset(); }
+                        reset() {
+                            this.x = (Math.random() - 0.5) * width * 2;
+                            this.y = (Math.random() - 0.5) * height * 2;
+                            this.z = Math.random() * 1000 + 1;
+                            this.size = Math.random() * 1.5 + 0.2;
+                            this.color = Math.random() > 0.7 ? 'rgba(255, 215, 0, 0.8)' : (Math.random() > 0.5 ? 'rgba(0, 243, 255, 0.6)' : 'rgba(255, 255, 255, 0.5)');
+                        }
+                        update() {
+                            this.z -= scrollSpeed;
+                            if (this.z <= 0) { this.reset(); this.z = 1000; }
+                        }
+                        draw() {
+                            const x = (this.x / this.z) * 500 + width / 2;
+                            const y = (this.y / this.z) * 500 + height / 2;
+                            const size = this.size * (1 - this.z / 1000);
+                            if (x < 0 || x > width || y < 0 || y > height) return;
+                            ctx.beginPath();
+                            ctx.arc(x, y, size, 0, Math.PI * 2);
+                            ctx.fillStyle = this.color;
+                            ctx.fill();
+                        }
+                    }
+
+                    // ✅ 150 نجمة بس بدل 500
+                    for (let i = 0; i < 150; i++) { stars.push(new Star()); }
+
+                    window.addEventListener('scroll', () => {
+                        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                        const scrolled = winScroll / height;
+                        scrollSpeed = scrolled * 15;
+                    });
+
+                    function animateCanvas(currentTime) {
+                        requestAnimationFrame(animateCanvas);
+                        // ✅ التحكم في الـ FPS
+                        if (currentTime - lastTime < 1000 / FPS) return;
+                        lastTime = currentTime;
+
+                        ctx.clearRect(0, 0, width, height);
+                        ctx.fillStyle = 'rgba(1, 0, 8, 0.3)';
+                        ctx.fillRect(0, 0, width, height);
+                        stars.forEach(star => { star.update(); star.draw(); });
+                    }
+                    requestAnimationFrame(animateCanvas);
+                }
+
+                /* 3. شريط التقدم */
+                window.onscroll = function() {
+                    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    var scrolled = (winScroll / height) * 100;
+                    const bar = document.getElementById("progress-bar");
+                    if (bar) bar.style.width = scrolled + "%";
                 };
-                updateCount();
-            });
-        }
-        let counterObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    animateCounters();
-                    observer.unobserve(entry.target);
+
+                /* 4. تأثير الظهور */
+                const reveals = document.querySelectorAll(".reveal");
+                if (reveals.length > 0) {
+                    const revealObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add("active");
+                                revealObserver.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    reveals.forEach(el => revealObserver.observe(el));
                 }
-            });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('.stats-grid').forEach(section => {
-            counterObserver.observe(section);
+
+                /* 5. مؤثر الكتابة */
+                const typewriterElement = document.getElementById('typewriter');
+                if (typewriterElement) {
+                    const typewriterText = typewriterElement.innerText;
+                    typewriterElement.innerText = '';
+                    let charIndex = 0;
+
+                    function typeWriter() {
+                        if (charIndex < typewriterText.length) {
+                            typewriterElement.innerHTML += typewriterText.charAt(charIndex);
+                            charIndex++;
+                            setTimeout(typeWriter, 40);
+                        } else {
+                            typewriterElement.innerHTML = 'براندك بيخسر فلوس في <span style="color: var(--gold);">إعلانات عشوائية؟</span>';
+                        }
+                    }
+                    setTimeout(typeWriter, 300);
+                }
+
+                /* 6. تفعيل 3D Tilt (بحماية) */
+                if (window.innerWidth > 900 && typeof VanillaTilt !== 'undefined') {
+                    VanillaTilt.init(document.querySelectorAll(".tilt-3d"), {
+                        max: 15, speed: 400, glare: true, "max-glare": 0.3, scale: 1.02
+                    });
+                }
+
+                /* 7. حركة الأرقام */
+                const counters = document.querySelectorAll('.counter');
+                const speed = 200;
+                const animateCounters = () => {
+                    counters.forEach(counter => {
+                        const updateCount = () => {
+                            const target = +counter.getAttribute('data-target');
+                            const count = +counter.innerText;
+                            const inc = target / speed;
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count + inc);
+                                setTimeout(updateCount, 20);
+                            } else {
+                                counter.innerText = target + (target > 10 ? '+' : '');
+                            }
+                        };
+                        updateCount();
+                    });
+                }
+                if (counters.length > 0) {
+                    let counterObserver = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if(entry.isIntersecting) {
+                                animateCounters();
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    document.querySelectorAll('.stats-grid').forEach(section => {
+                        counterObserver.observe(section);
+                    });
+                }
+
+                /* 8. مختبر الإعلانات */
+                const labBtn = document.getElementById('labBtn');
+                const labContainer = document.getElementById('labContainer');
+                const labTitle = document.getElementById('labTitle');
+                const labText = document.getElementById('labText');
+                const labNumbers = document.getElementById('labNumbers');
+                const labIcon = document.getElementById('labIcon');
+                const miniChartVal1 = document.getElementById('miniChartVal1');
+                const miniChartVal2 = document.getElementById('miniChartVal2');
+                const miniChartVal3 = document.getElementById('miniChartVal3');
+                let isClicked = false;
+
+                if (labBtn) {
+                    labBtn.addEventListener('click', () => {
+                        if (isClicked) return;
+                        isClicked = true;
+
+                        labContainer.classList.add('win');
+                        labIcon.classList.remove('fa-chart-line');
+                        labIcon.classList.add('fa-rocket');
+
+                        labTitle.innerHTML = 'استراتيجية حريز = <span style="color: var(--gold);">أرباح</span>';
+                        labText.innerHTML = 'بيانات دقيقة، تصميم إعلاني قاتل، وعائد استثمار (ROI) بيضرب.';
+                        labBtn.innerHTML = '<i class="fas fa-check"></i> تم التحويل!';
+                        labBtn.style.background = 'var(--gold)';
+                        labBtn.style.color = '#000';
+
+                        let currentVal = 0;
+                        const targetVal = 10000;
+                        const duration = 1500;
+                        const startTime = performance.now();
+
+                        function updateNumber(currentTime) {
+                            const elapsedTime = currentTime - startTime;
+                            const progress = Math.min(elapsedTime / duration, 1);
+                            currentVal = Math.floor(progress * targetVal);
+                            if (progress < 1) {
+                                labNumbers.innerHTML = `<span class="counter-green">+ ${currentVal.toLocaleString()} ج.م</span>`;
+                                requestAnimationFrame(updateNumber);
+                            } else {
+                                labNumbers.innerHTML = `<span class="counter-green">+ ${targetVal.toLocaleString()} ج.م</span>`;
+                            }
+                        }
+                        requestAnimationFrame(updateNumber);
+
+                        let roasVal = 0;
+                        const roasInterval = setInterval(() => {
+                            roasVal += 0.1;
+                            miniChartVal1.textContent = roasVal.toFixed(1) + 'x';
+                            if (roasVal >= 4.5) clearInterval(roasInterval);
+                        }, 50);
+
+                        let cpaVal = 10;
+                        const cpaInterval = setInterval(() => {
+                            cpaVal -= 0.15;
+                            if(cpaVal <= 2.5) cpaVal = 2.5;
+                            miniChartVal2.textContent = cpaVal.toFixed(1) + '$';
+                            if (cpaVal <= 2.5) clearInterval(cpaInterval);
+                        }, 50);
+
+                        let growthVal = 0;
+                        const growthInterval = setInterval(() => {
+                            growthVal += 2;
+                            if(growthVal >= 120) growthVal = 120;
+                            miniChartVal3.textContent = growthVal + '%';
+                            if (growthVal >= 120) clearInterval(growthInterval);
+                        }, 30);
+                    });
+                }
+
+                /* 9. رادار العملاء */
+                const radarBtn = document.getElementById('radarBtn');
+                const radarScreen = document.getElementById('radarScreen');
+                const radarInfo = document.getElementById('radarInfo');
+                const radarTitle = document.getElementById('radarTitle');
+                const radarText = document.getElementById('radarText');
+                const radarNumbers = document.getElementById('radarNumbers');
+                let isRadarActive = false;
+
+                if (radarBtn) {
+                    radarBtn.addEventListener('click', () => {
+                        if (isRadarActive) return;
+                        isRadarActive = true;
+
+                        radarScreen.classList.add('active');
+                        radarInfo.classList.add('active');
+                        
+                        radarTitle.innerHTML = '🎯 جمهورك المستهدف اتحدد!';
+                        radarText.innerHTML = 'البيانات بتاعتنا وصلتك للعميل الصح، في الوقت الصح.';
+                        radarBtn.innerHTML = '<i class="fas fa-check"></i> تم التحديد!';
+                        radarBtn.style.background = 'var(--cyan)';
+                        radarBtn.style.color = '#000';
+
+                        let currentVal = 0;
+                        const targetVal = 10000;
+                        const duration = 2000;
+                        const startTime = performance.now();
+
+                        function updateNumber(currentTime) {
+                            const elapsedTime = currentTime - startTime;
+                            const progress = Math.min(elapsedTime / duration, 1);
+                            currentVal = Math.floor(progress * targetVal);
+                            if (progress < 1) {
+                                radarNumbers.innerHTML = `<span>+ ${currentVal.toLocaleString()} عميل محتمل</span>`;
+                                requestAnimationFrame(updateNumber);
+                            } else {
+                                radarNumbers.innerHTML = `<span>+ ${targetVal.toLocaleString()} عميل محتمل</span>`;
+                            }
+                        }
+                        requestAnimationFrame(updateNumber);
+                    });
+                }
+
+            }, 300); // ✅ 300ms تأخير بعد تحميل كل حاجة
         });
-
-        /* ========================================== */
-        /* 8. مختبر الإعلانات */
-        /* ========================================== */
-        const labBtn = document.getElementById('labBtn');
-        const labContainer = document.getElementById('labContainer');
-        const labTitle = document.getElementById('labTitle');
-        const labText = document.getElementById('labText');
-        const labNumbers = document.getElementById('labNumbers');
-        const labIcon = document.getElementById('labIcon');
-        const miniChartVal1 = document.getElementById('miniChartVal1');
-        const miniChartVal2 = document.getElementById('miniChartVal2');
-        const miniChartVal3 = document.getElementById('miniChartVal3');
-        let isClicked = false;
-
-        if (labBtn) {
-            labBtn.addEventListener('click', () => {
-                if (isClicked) return;
-                isClicked = true;
-
-                labContainer.style.transform = 'scale(1.02)';
-                setTimeout(() => labContainer.style.transform = 'scale(1)', 200);
-
-                labContainer.classList.add('win');
-                labIcon.classList.remove('fa-chart-line');
-                labIcon.classList.add('fa-rocket');
-
-                labTitle.innerHTML = 'استراتيجية حريز = <span style="color: var(--gold);">أرباح</span>';
-                labText.innerHTML = 'بيانات دقيقة، تصميم إعلاني قاتل، وعائد استثمار (ROI) بيضرب.';
-                labBtn.innerHTML = '<i class="fas fa-check"></i> تم التحويل!';
-                labBtn.style.background = 'var(--gold)';
-                labBtn.style.color = '#000';
-
-                let currentVal = 0;
-                const targetVal = 10000;
-                const duration = 1500;
-                const startTime = performance.now();
-
-                function updateNumber(currentTime) {
-                    const elapsedTime = currentTime - startTime;
-                    const progress = Math.min(elapsedTime / duration, 1);
-                    currentVal = Math.floor(progress * targetVal);
-                    if (progress < 1) {
-                        labNumbers.innerHTML = `<span class="counter-green">+ ${currentVal.toLocaleString()} ج.م</span>`;
-                        requestAnimationFrame(updateNumber);
-                    } else {
-                        labNumbers.innerHTML = `<span class="counter-green">+ ${targetVal.toLocaleString()} ج.م</span>`;
-                    }
-                }
-                requestAnimationFrame(updateNumber);
-
-                let roasVal = 0;
-                const roasInterval = setInterval(() => {
-                    roasVal += 0.1;
-                    miniChartVal1.textContent = roasVal.toFixed(1) + 'x';
-                    if (roasVal >= 4.5) clearInterval(roasInterval);
-                }, 50);
-
-                let cpaVal = 10;
-                const cpaInterval = setInterval(() => {
-                    cpaVal -= 0.15;
-                    if(cpaVal <= 2.5) cpaVal = 2.5;
-                    miniChartVal2.textContent = cpaVal.toFixed(1) + '$';
-                    if (cpaVal <= 2.5) clearInterval(cpaInterval);
-                }, 50);
-
-                let growthVal = 0;
-                const growthInterval = setInterval(() => {
-                    growthVal += 2;
-                    if(growthVal >= 120) growthVal = 120;
-                    miniChartVal3.textContent = growthVal + '%';
-                    if (growthVal >= 120) clearInterval(growthInterval);
-                }, 30);
-
-                if (navigator.vibrate) navigator.vibrate(100);
-            });
-        }
-
-        /* ========================================== */
-        /* 9. رادار العملاء */
-        /* ========================================== */
-        const radarBtn = document.getElementById('radarBtn');
-        const radarScreen = document.getElementById('radarScreen');
-        const radarInfo = document.getElementById('radarInfo');
-        const radarTitle = document.getElementById('radarTitle');
-        const radarText = document.getElementById('radarText');
-        const radarNumbers = document.getElementById('radarNumbers');
-        let isRadarActive = false;
-
-        if (radarBtn) {
-            radarBtn.addEventListener('click', () => {
-                if (isRadarActive) return;
-                isRadarActive = true;
-
-                radarScreen.classList.add('active');
-                radarInfo.classList.add('active');
-                
-                radarTitle.innerHTML = '🎯 جمهورك المستهدف اتحدد!';
-                radarText.innerHTML = 'البيانات بتاعتنا وصلتك للعميل الصح، في الوقت الصح.';
-                radarBtn.innerHTML = '<i class="fas fa-check"></i> تم التحديد!';
-                radarBtn.style.background = 'var(--cyan)';
-                radarBtn.style.color = '#000';
-
-                let currentVal = 0;
-                const targetVal = 10000;
-                const duration = 2000;
-                const startTime = performance.now();
-
-                function updateNumber(currentTime) {
-                    const elapsedTime = currentTime - startTime;
-                    const progress = Math.min(elapsedTime / duration, 1);
-                    currentVal = Math.floor(progress * targetVal);
-                    if (progress < 1) {
-                        radarNumbers.innerHTML = `<span>+ ${currentVal.toLocaleString()} عميل محتمل</span>`;
-                        requestAnimationFrame(updateNumber);
-                    } else {
-                        radarNumbers.innerHTML = `<span>+ ${targetVal.toLocaleString()} عميل محتمل</span>`;
-                    }
-                }
-                requestAnimationFrame(updateNumber);
-                if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-            });
-        }
     </script>
 </body>
 </html>
