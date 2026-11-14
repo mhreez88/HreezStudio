@@ -60,23 +60,18 @@
             box-shadow: 0 0 15px var(--gold);
         }
 
-        /* === تأثيرات الدخول 3D === */
-        .reveal-3d {
+        /* ========================================== */
+        /* === تأثير الظهور الموحد والجميل لكل سيكشن === */
+        /* ========================================== */
+        .section-reveal {
             opacity: 0;
-            transform: perspective(1000px) rotateX(-20deg) translateY(100px) scale(0.9);
-            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(60px) scale(0.95);
+            transition: opacity 1s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                        transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .reveal-3d.active { opacity: 1; transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1); }
-
-        /* === تأثير الظهور المتتالي للكروت (Staggered) === */
-        .stagger-item {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease-out;
-        }
-        .stagger-item.active {
+        .section-reveal.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         /* === القسم الرئيسي === */
@@ -108,9 +103,7 @@
             transform: translateZ(20px);
         }
 
-        /* ========================================== */
-        /* === حاوية الصورة (300x300 ثابتة) === */
-        /* ========================================== */
+        /* === حاوية الصورة === */
         .hero-image {
             flex: 1; display: flex; justify-content: center; align-items: center;
             position: relative; width: 300px; height: 300px;
@@ -149,13 +142,27 @@
         .btn-outline { background: transparent; color: var(--gold); border: 2px solid var(--gold); }
         .btn-outline:hover { background: var(--gold); color: #000; transform: translateZ(50px) scale(1.05); }
 
+        /* === تنسيق عام للسيكشنات === */
+        .section-wrapper {
+            padding: 60px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center; font-size: 2.5rem; font-weight: 900; margin-bottom: 50px;
+            text-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+        .section-title span { color: var(--gold); }
+
         /* === قسم ليه تختارني === */
-        .why-me-section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; text-align: center; perspective: 1000px; }
+        .why-me-section { perspective: 1000px; }
         .why-me-box {
             background: rgba(20, 20, 30, 0.6); border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 30px; padding: 40px 30px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 30px rgba(212,175,55,0.05);
             transform-style: preserve-3d; position: relative;
+            text-align: center;
         }
         .why-me-box p {
             font-size: 1.2rem; line-height: 1.8; color: #e0e0e0; font-weight: 600;
@@ -177,28 +184,44 @@
             font-size: 0.9rem; color: var(--text-muted); font-weight: 600;
         }
 
-        /* === الخدمات === */
-        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; perspective: 1200px; }
-        .section-title { text-align: center; font-size: 2.5rem; font-weight: 900; margin-bottom: 50px; text-shadow: 0 0 15px rgba(255,255,255,0.1); }
-        .section-title span { color: var(--gold); }
-
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; transform-style: preserve-3d; max-width: 1000px; margin: 0 auto; }
+        /* ========================================== */
+        /* === الخدمات (أنيميشن احترافي) === */
+        /* ========================================== */
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; 
+            transform-style: preserve-3d; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+        }
         
         .service-card {
             background: rgba(20, 20, 30, 0.8); padding: 40px 30px; border-radius: 20px;
             border: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(10px);
             position: relative; transform-style: preserve-3d;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
             cursor: pointer;
+            
+            /* تأثير الظهور الاحترافي */
+            opacity: 0;
+            transform: perspective(1000px) rotateX(-15deg) translateY(50px) scale(0.9);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
+        
+        .service-card.active {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
+        }
+
         .service-card i, .service-card h3, .service-card p { transform: translateZ(40px); display: block; }
         .service-card i { font-size: 3rem; color: var(--gold); margin-bottom: 20px; text-shadow: 0 0 15px var(--gold-glow); }
         .service-card h3 { font-size: 1.5rem; margin-bottom: 15px; color: #fff; }
         .service-card p { color: var(--text-muted); line-height: 1.7; font-size: 1rem; }
 
         /* === مختبر الإعلانات === */
-        .ad-lab-section { padding: 80px 20px; max-width: 800px; margin: 0 auto; perspective: 1000px; }
+        .ad-lab-section { perspective: 1000px; }
         
         .lab-container {
             position: relative; width: 100%; min-height: 400px;
@@ -261,7 +284,7 @@
         .mini-chart-item.growth .value { color: var(--green); }
 
         /* === رادار العملاء === */
-        .radar-section { padding: 80px 20px; max-width: 900px; margin: 0 auto; text-align: center; perspective: 1000px; }
+        .radar-section { perspective: 1000px; }
         .radar-wrapper { display: flex; flex-direction: column; align-items: center; gap: 40px; }
         .radar-container-pro {
             position: relative; width: 350px; height: 350px;
@@ -407,7 +430,7 @@
     </a>
 
     <!-- ========================================== -->
-    <!-- 1. الهيدر (المشكلة + الحل السريع) -->
+    <!-- 1. الهيدر -->
     <!-- ========================================== -->
     <header>
         <div class="hero-content">
@@ -422,19 +445,15 @@
             </div>
             
             <div class="hero-image reveal-3d">
-                <!-- ======================================================= -->
-                <!-- 👇 الصورة الشخصية 👇 -->
-                <!-- ======================================================= -->
                 <img src="Mohamed_Hreez.jpg" alt="Mohamed Hreez" id="profilePic">
-                <!-- ======================================================= -->
             </div>
         </div>
     </header>
 
     <!-- ========================================== -->
-    <!-- 2. ليه تختارني (الحل) -->
+    <!-- 2. ليه تختارني -->
     <!-- ========================================== -->
-    <section class="why-me-section reveal-3d">
+    <section class="section-wrapper section-reveal why-me-section">
         <h2 class="section-title">ليه تختارني <span>كشريك نجاح؟</span></h2>
         <div class="why-me-box">
             <p>مش بس بعمل حملات إعلانية، أنا بشتغل <span class="highlight">كشريك نجاح ليك</span>. بدرس جمهورك، بحلل منافسينك، وبصمم حملات بتجيب <span class="highlight">عملاء حقيقيين</span> وبتزود أرباحك.</p>
@@ -461,27 +480,27 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 3. الخدمات (إيه اللي هتقدمه) -->
+    <!-- 3. الخدمات -->
     <!-- ========================================== -->
-    <section id="services">
-        <h2 class="section-title reveal-3d">خدماتي <span>الاحترافية</span></h2>
+    <section id="services" class="section-wrapper section-reveal">
+        <h2 class="section-title">خدماتي <span>الاحترافية</span></h2>
         <div class="services-grid">
-            <div class="service-card stagger-item tilt-3d">
+            <div class="service-card tilt-3d">
                 <i class="fas fa-bullseye"></i>
                 <h3>الميديا باينج</h3>
                 <p>إطلاق وإدارة حملات إعلانية على فيسبوك، انستجرام، وتيك توك بأعلى معدل تحويل وأقل تكلفة ممكنة.</p>
             </div>
-            <div class="service-card stagger-item tilt-3d">
+            <div class="service-card tilt-3d">
                 <i class="fas fa-user-graduate"></i>
                 <h3>تدريب شخصي (One-to-One)</h3>
                 <p>كوتشينج فردي شامل في التجارة الإلكترونية: من اختيار المنتج، تصميم صفحة المنتج، تصميم الإعلان الصحيح، تحليل البيانات، وعمل اسكيل (Scale) ناجح لزيادة الأرباح.</p>
             </div>
-            <div class="service-card stagger-item tilt-3d">
+            <div class="service-card tilt-3d">
                 <i class="fas fa-chart-line"></i>
                 <h3>تحليل البيانات وتحسين الحملات</h3>
                 <p>تحليل أداء الحملات الإعلانية (Optimization) بشكل دوري، لمعرفة نقاط القوة والضعف، وتقليل تكلفة التحويل (CPA) لتحقيق أقصى عائد على الاستثمار (ROI).</p>
             </div>
-            <div class="service-card stagger-item tilt-3d">
+            <div class="service-card tilt-3d">
                 <i class="fas fa-chart-pie"></i>
                 <h3>التسويق الإلكتروني</h3>
                 <p>بناء استراتيجيات تسويق متكاملة لزيادة الوعي بعلامتك التجارية والوصول إلى الجمهور المستهدف بدقة.</p>
@@ -490,11 +509,9 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 4. الأدوات التفاعلية (الإبهار) -->
+    <!-- 4. مختبر الإعلانات -->
     <!-- ========================================== -->
-    
-    <!-- مختبر الإعلانات -->
-    <section class="ad-lab-section reveal-3d">
+    <section class="section-wrapper section-reveal ad-lab-section">
         <h2 class="section-title">جرّب بنفسك.. <span>سر الإعلان الناجح</span></h2>
         <div class="lab-container loss" id="labScreen">
             <div class="lab-content" id="labContent">
@@ -531,8 +548,10 @@
         </div>
     </section>
 
-    <!-- رادار العملاء -->
-    <section class="radar-section reveal-3d">
+    <!-- ========================================== -->
+    <!-- 5. رادار العملاء -->
+    <!-- ========================================== -->
+    <section class="section-wrapper section-reveal radar-section">
         <h2 class="section-title">اكتشف <span>جمهورك المستهدف</span></h2>
         <div class="radar-wrapper">
             <div class="radar-container-pro" id="radarScreen">
@@ -562,18 +581,18 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 5. الأرقام والإحصائيات (الدليل) -->
+    <!-- 6. الأرقام والإحصائيات -->
     <!-- ========================================== -->
-    <div class="stats-section reveal-3d">
+    <div class="stats-section section-reveal">
         <div class="stat-item"><h3 class="counter" data-target="4">0</h3><p>سنوات خبرة</p></div>
         <div class="stat-item"><h3 class="counter" data-target="50">0</h3><p>+ عميل سعيد</p></div>
         <div class="stat-item"><h3 class="counter" data-target="100">0</h3><p>+ حملة ناجحة</p></div>
     </div>
 
     <!-- ========================================== -->
-    <!-- 6. التواصل (القرار) -->
+    <!-- 7. التواصل -->
     <!-- ========================================== -->
-    <section id="contact" class="reveal-3d">
+    <section id="contact" class="section-wrapper section-reveal">
         <div class="contact-section">
             <h2>جاهز تنقل براندك لمستوى تاني؟</h2>
             <p>لو عايز إعلانات بتجيب أرباح حقيقية، أو محتاج تدريب شخصي يخليك محترف.. تواصل معي دلوقتي.</p>
@@ -607,36 +626,35 @@
             document.getElementById("progress-bar").style.width = scrolled + "%";
         };
 
-        // 2. تأثير الظهور 3D
-        const reveals = document.querySelectorAll(".reveal-3d");
-        function reveal() {
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 100;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                }
-            }
-        }
-        window.addEventListener("scroll", reveal);
-        reveal(); 
-
-        // 3. تأثير الظهور المتتالي للكروت (Staggered Reveal)
-        const staggerItems = document.querySelectorAll(".stagger-item");
-        const staggerObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
+        // ==========================================
+        // 2. تأثير الظهور الموحد لكل سيكشن (ناعم وجميل)
+        // ==========================================
+        const sectionReveals = document.querySelectorAll(".section-reveal");
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // إضافة تأخير بسيط لكل كارت عشان يظهر ورا التاني
-                    setTimeout(() => {
-                        entry.target.classList.add("active");
-                    }, index * 150); // 150ms تأخير لكل كارت
-                    staggerObserver.unobserve(entry.target);
+                    entry.target.classList.add("active");
+                    sectionObserver.unobserve(entry.target); // يشتغل مرة واحدة بس
+                }
+            });
+        }, { threshold: 0.15 }); // يبدأ يظهر لما 15% من السيكشن يبان
+
+        sectionReveals.forEach(section => sectionObserver.observe(section));
+
+        // ==========================================
+        // 3. أنيميشن الكروت (يظهر مع بعضه بشكل ناعم)
+        // ==========================================
+        const cards = document.querySelectorAll(".service-card");
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                    cardObserver.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.2 });
-
-        staggerItems.forEach(item => staggerObserver.observe(item));
+        
+        cards.forEach(card => cardObserver.observe(card));
 
         // 4. حركة الأرقام
         const counters = document.querySelectorAll('.counter');
