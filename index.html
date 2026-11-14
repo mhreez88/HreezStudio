@@ -38,10 +38,10 @@
             color: var(--text-main);
             overflow-x: hidden;
             position: relative;
-            cursor: none; /* إخفاء المؤشر الأصلي */
+            cursor: none;
         }
 
-        /* === خلفية Canvas الكونية === */
+        /* === خلفية Canvas الكونية (Warp Speed) === */
         #cosmic-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -122,8 +122,6 @@
             text-shadow: 0 0 40px var(--gold-dim);
             min-height: 4.2rem;
         }
-        .hero-text h1 span { color: var(--gold); }
-        
         .hero-text h2 {
             font-size: 1.3rem; color: var(--cyan); margin-bottom: 25px; font-weight: 300;
             letter-spacing: 2px; text-transform: uppercase;
@@ -164,7 +162,9 @@
             transform: translateY(-5px) scale(1.02);
         }
 
-        /* === الصورة في الكرة البلورية === */
+        /* ========================================== */
+        /* === الصورة الهولوجرام === */
+        /* ========================================== */
         .hero-image-container {
             flex: 0.8;
             display: flex; justify-content: center; align-items: center;
@@ -173,67 +173,61 @@
             perspective: 1000px;
         }
 
-        .orb {
+        .hologram-container {
             position: relative;
             width: 320px; height: 320px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), rgba(0,0,0,0.8));
-            box-shadow: 
-                0 0 60px var(--gold-dim),
-                0 0 120px var(--cyan-dim),
-                inset 0 0 60px rgba(0,0,0,0.8),
-                inset 0 0 20px rgba(255,255,255,0.2);
             transform-style: preserve-3d;
-            animation: orbFloat 8s ease-in-out infinite;
-            border: 1px solid rgba(255,255,255,0.1);
+            animation: hologramFloat 6s ease-in-out infinite;
         }
 
-        .orb::before {
+        .hologram-container::before {
             content: '';
-            position: absolute; top: 5%; left: 10%;
-            width: 80%; height: 30%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.4), transparent);
-            border-radius: 50%;
-            filter: blur(10px);
-            z-index: 3;
-        }
-
-        .orb img {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            filter: brightness(1.1) contrast(1.1);
-            opacity: 0.9;
-            position: relative; z-index: 2;
-        }
-
-        .orb-ring {
             position: absolute;
-            top: 50%; left: 50%;
-            width: 120%; height: 120%;
-            border-radius: 50%;
-            border: 1px solid var(--cyan-dim);
-            transform: translate(-50%, -50%) rotateX(75deg);
-            animation: ringSpin 12s linear infinite;
-            z-index: 0;
-        }
-        .orb-ring:nth-child(2) {
-            width: 140%; height: 140%;
-            border-color: var(--gold-dim);
-            animation-duration: 18s;
-            animation-direction: reverse;
+            top: -20px; left: -20px; right: -20px; bottom: -20px;
+            border: 1px solid var(--cyan);
+            border-radius: 20px;
+            opacity: 0.3;
+            animation: hologramPulse 2s infinite;
         }
 
-        @keyframes orbFloat {
-            0%, 100% { transform: translateY(0) rotateY(0deg); }
-            50% { transform: translateY(-20px) rotateY(10deg); }
-        }
-        @keyframes ringSpin {
-            0% { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg); }
-            100% { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(360deg); }
+        .hologram-container::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 243, 255, 0.2) 50%, transparent 100%);
+            background-size: 100% 10px;
+            animation: hologramScan 3s linear infinite;
+            pointer-events: none;
+            z-index: 5;
+            border-radius: 20px;
         }
 
-        /* === تنسيق الأقسام العامة === */
+        .hologram-img {
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+            filter: brightness(1.1) contrast(1.1) hue-rotate(10deg);
+            position: relative; z-index: 2;
+            border: 1px solid rgba(0, 243, 255, 0.5);
+            box-shadow: 0 0 40px var(--cyan-dim), inset 0 0 40px var(--cyan-dim);
+        }
+
+        @keyframes hologramFloat {
+            0%, 100% { transform: translateY(0) rotateY(0deg) rotateX(0deg); }
+            50% { transform: translateY(-20px) rotateY(5deg) rotateX(3deg); }
+        }
+        @keyframes hologramPulse {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.05); }
+        }
+        @keyframes hologramScan {
+            0% { background-position: 0 -100%; }
+            100% { background-position: 0 200%; }
+        }
+
+        /* ========================================== */
+        /* === الأقسام العامة === */
+        /* ========================================== */
         section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
         
         .section-title {
@@ -252,7 +246,7 @@
         }
 
         /* ========================================== */
-        /* === كروت الخدمات الزجاجية === */
+        /* === كروت الخدمات (Zero Gravity) === */
         /* ========================================== */
         .services-grid {
             display: grid;
@@ -272,6 +266,16 @@
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             transform-style: preserve-3d;
+            animation: zeroGravity 6s ease-in-out infinite;
+        }
+
+        .glass-card:nth-child(2) { animation-delay: 0.5s; }
+        .glass-card:nth-child(3) { animation-delay: 1s; }
+        .glass-card:nth-child(4) { animation-delay: 1.5s; }
+
+        @keyframes zeroGravity {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
         }
 
         .glass-card::before {
@@ -284,9 +288,10 @@
 
         .glass-card:hover::before { opacity: 1; }
         .glass-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px) scale(1.02) !important;
             border-color: var(--gold-dim);
             box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px var(--gold-dim);
+            animation-play-state: paused;
         }
 
         .glass-card i {
@@ -302,7 +307,7 @@
         .glass-card p { color: var(--text-muted); line-height: 1.8; font-size: 0.95rem; }
 
         /* ========================================== */
-        /* === مختبر الإعلانات (Hologram) === */
+        /* === مختبر الإعلانات (الشقوق الزجاجية) === */
         /* ========================================== */
         .lab-container {
             background: rgba(0, 0, 0, 0.6);
@@ -314,6 +319,17 @@
             overflow: hidden;
             text-align: center;
         }
+
+        .crack-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/cracked-glass.png');
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 4;
+            transition: opacity 0.5s ease;
+        }
+        .lab-container.win .crack-overlay { opacity: 0; }
 
         .lab-container::before {
             content: '';
@@ -504,13 +520,27 @@
             100% { box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
         }
 
+        /* === التأثير الصوتي البصري (Visual Sound Waves) === */
+        .sound-wave {
+            position: fixed;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            animation: waveExpand 0.8s ease-out forwards;
+        }
+        @keyframes waveExpand {
+            0% { width: 0; height: 0; opacity: 1; }
+            100% { width: 300px; height: 300px; opacity: 0; }
+        }
+
         footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.9rem; position: relative; z-index: 10; }
 
         /* ========================================== */
         /* === إعدادات الموبايل === */
         /* ========================================== */
         @media (max-width: 900px) {
-            body { cursor: auto; } /* إرجاع المؤشر الأصلي في الموبايل */
+            body { cursor: auto; }
             .cursor { display: none; }
             
             .hero-content { flex-direction: column-reverse; text-align: center; gap: 40px; }
@@ -518,9 +548,10 @@
             .hero-text p { margin: 0 auto 30px; }
             
             .hero-image-container { width: 280px; height: 280px; }
-            .orb { width: 240px; height: 240px; }
+            .hologram-container { width: 240px; height: 240px; }
             
             .services-grid { grid-template-columns: 1fr; }
+            .glass-card { animation: none; } /* إيقاف الطفو في الموبايل عشان الأداء */
             
             .stats-grid { gap: 30px; }
             .stat-item h3 { font-size: 2.5rem; }
@@ -534,7 +565,7 @@
     <!-- مؤشر الماوس المخصص -->
     <div class="cursor" id="customCursor"></div>
 
-    <!-- خلفية Canvas الكونية -->
+    <!-- خلفية Canvas الكونية (Warp Speed) -->
     <canvas id="cosmic-canvas"></canvas>
 
     <!-- شريط التقدم -->
@@ -561,10 +592,8 @@
             </div>
             
             <div class="hero-image-container reveal">
-                <div class="orb">
-                    <div class="orb-ring"></div>
-                    <div class="orb-ring"></div>
-                    <img src="Mohamed_Hreez.jpg" alt="Mohamed Hreez" id="profilePic">
+                <div class="hologram-container tilt-3d">
+                    <img src="Mohamed_Hreez.jpg" alt="Mohamed Hreez" class="hologram-img" id="profilePic">
                 </div>
             </div>
         </div>
@@ -600,11 +629,12 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 3. مختبر الإعلانات -->
+    <!-- 3. مختبر الإعلانات (Cracked Glass) -->
     <!-- ========================================== -->
     <section>
         <h2 class="section-title reveal">جرّب بنفسك.. سر الإعلان الناجح</h2>
         <div class="lab-container reveal" id="labContainer">
+            <div class="crack-overlay"></div>
             <div class="lab-content">
                 <i class="fas fa-chart-line lab-icon-main" id="labIcon"></i>
                 <h3 id="labTitle">حملة عشوائية = خسارة</h3>
@@ -709,10 +739,10 @@
 
     <script>
         /* ========================================== */
-        /* 1. مؤشر الماوس المخصص */
+        /* 1. مؤشر الماوس المخصص + الموجات الصوتية */
         /* ========================================== */
         const cursor = document.getElementById('customCursor');
-        const hoverElements = document.querySelectorAll('a, button, .glass-card, .btn');
+        const hoverElements = document.querySelectorAll('a, button, .glass-card, .btn, .lab-btn, .radar-btn');
 
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
@@ -724,14 +754,25 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
 
+        // الموجات الصوتية البصرية
+        document.addEventListener('click', (e) => {
+            const wave = document.createElement('div');
+            wave.classList.add('sound-wave');
+            wave.style.left = (e.clientX - 150) + 'px'; // 150 = نصف القطر النهائي
+            wave.style.top = (e.clientY - 150) + 'px';
+            document.body.appendChild(wave);
+            setTimeout(() => wave.remove(), 800);
+        });
+
         /* ========================================== */
-        /* 2. خلفية Canvas الكونية */
+        /* 2. خلفية Canvas الكونية (Warp Speed) */
         /* ========================================== */
         const canvas = document.getElementById('cosmic-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
         let stars = [];
         let mouse = { x: 0, y: 0 };
+        let scrollSpeed = 0;
 
         function resizeCanvas() {
             width = canvas.width = window.innerWidth;
@@ -745,31 +786,34 @@
                 this.reset();
             }
             reset() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
+                this.x = (Math.random() - 0.5) * width * 2;
+                this.y = (Math.random() - 0.5) * height * 2;
                 this.z = Math.random() * 1000 + 1;
-                this.size = Math.random() * 2 + 0.5;
+                this.size = Math.random() * 1.5 + 0.2;
                 this.color = Math.random() > 0.7 ? 'rgba(255, 215, 0, 0.8)' : (Math.random() > 0.5 ? 'rgba(0, 243, 255, 0.6)' : 'rgba(255, 255, 255, 0.5)');
             }
             update() {
-                // تفاعل بسيط مع الماوس
-                let dx = this.x - mouse.x;
-                let dy = this.y - mouse.y;
-                let dist = Math.sqrt(dx*dx + dy*dy);
-                if (dist < 100) {
-                    this.x += dx / dist * 2;
-                    this.y += dy / dist * 2;
+                this.z -= scrollSpeed; // Warp Speed effect
+                if (this.z <= 0) {
+                    this.reset();
+                    this.z = 1000;
                 }
             }
             draw() {
+                const x = (this.x / this.z) * 500 + width / 2;
+                const y = (this.y / this.z) * 500 + height / 2;
+                const size = this.size * (1 - this.z / 1000);
+
+                if (x < 0 || x > width || y < 0 || y > height) return;
+
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.arc(x, y, size, 0, Math.PI * 2);
                 ctx.fillStyle = this.color;
                 ctx.fill();
             }
         }
 
-        for (let i = 0; i < 400; i++) {
+        for (let i = 0; i < 500; i++) {
             stars.push(new Star());
         }
 
@@ -778,8 +822,20 @@
             mouse.y = e.clientY;
         });
 
+        // ربط سرعة الـ Warp بالـ Scroll
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = winScroll / height;
+            scrollSpeed = scrolled * 15; // سرعة الـ warp
+        });
+
         function animateCanvas() {
             ctx.clearRect(0, 0, width, height);
+            // إضافة تأثير الـ Warp على الخلفية
+            ctx.fillStyle = 'rgba(1, 0, 8, 0.3)';
+            ctx.fillRect(0, 0, width, height);
+            
             stars.forEach(star => {
                 star.update();
                 star.draw();
@@ -799,7 +855,7 @@
         };
 
         /* ========================================== */
-        /* 4. تأثير الظهور عند التمرير (Reveal) */
+        /* 4. تأثير الظهور عند التمرير */
         /* ========================================== */
         const reveals = document.querySelectorAll(".reveal");
         const revealObserver = new IntersectionObserver((entries) => {
@@ -813,7 +869,7 @@
         reveals.forEach(el => revealObserver.observe(el));
 
         /* ========================================== */
-        /* 5. مؤثر الكتابة (Typewriter) */
+        /* 5. مؤثر الكتابة */
         /* ========================================== */
         const typewriterElement = document.getElementById('typewriter');
         const typewriterText = typewriterElement.innerText;
@@ -824,38 +880,28 @@
             if (charIndex < typewriterText.length) {
                 typewriterElement.innerHTML += typewriterText.charAt(charIndex);
                 charIndex++;
-                setTimeout(typeWriter, 60);
+                setTimeout(typeWriter, 50);
             } else {
-                // بعد ما يخلص كتابة، نرجع النص ملون عادي
                 typewriterElement.innerHTML = 'براندك بيخسر فلوس في <span style="color: var(--gold);">إعلانات عشوائية؟</span>';
             }
         }
-        // نبدأ الكتابة بعد ما الصفحة تحمل
         setTimeout(typeWriter, 500);
 
         /* ========================================== */
-        /* 6. أنيميشن الكروت الزجاجية */
-        /* ========================================== */
-        const cards = document.querySelectorAll('.glass-card');
-        cards.forEach((card, index) => {
-            card.style.transitionDelay = `${index * 0.1}s`;
-        });
-
-        /* ========================================== */
-        /* 7. تفعيل 3D Tilt (للكمبيوتر فقط) */
+        /* 6. تفعيل 3D Tilt (للكمبيوتر فقط) */
         /* ========================================== */
         if (window.innerWidth > 900) {
-            VanillaTilt.init(document.querySelectorAll(".glass-card"), {
-                max: 10,
+            VanillaTilt.init(document.querySelectorAll(".tilt-3d"), {
+                max: 15,
                 speed: 400,
                 glare: true,
-                "max-glare": 0.2,
+                "max-glare": 0.3,
                 scale: 1.02
             });
         }
 
         /* ========================================== */
-        /* 8. حركة الأرقام */
+        /* 7. حركة الأرقام */
         /* ========================================== */
         const counters = document.querySelectorAll('.counter');
         const speed = 200;
@@ -888,7 +934,7 @@
         });
 
         /* ========================================== */
-        /* 9. مختبر الإعلانات + المؤشرات */
+        /* 8. مختبر الإعلانات (Cracked Glass) */
         /* ========================================== */
         const labBtn = document.getElementById('labBtn');
         const labContainer = document.getElementById('labContainer');
@@ -905,6 +951,10 @@
             labBtn.addEventListener('click', () => {
                 if (isClicked) return;
                 isClicked = true;
+
+                // تأثير كسر الزجاج (بسيط)
+                labContainer.style.transform = 'scale(1.02)';
+                setTimeout(() => labContainer.style.transform = 'scale(1)', 200);
 
                 labContainer.classList.add('win');
                 labIcon.classList.remove('fa-chart-line');
@@ -962,7 +1012,7 @@
         }
 
         /* ========================================== */
-        /* 10. رادار العملاء */
+        /* 9. رادار العملاء */
         /* ========================================== */
         const radarBtn = document.getElementById('radarBtn');
         const radarScreen = document.getElementById('radarScreen');
