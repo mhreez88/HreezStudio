@@ -41,7 +41,6 @@
             cursor: none;
         }
 
-        /* === خلفية Canvas الكونية === */
         #cosmic-canvas {
             position: fixed;
             top: 0; left: 0;
@@ -50,7 +49,6 @@
             pointer-events: none;
         }
 
-        /* === المؤشر المخصص === */
         .cursor {
             position: fixed;
             width: 20px; height: 20px;
@@ -79,7 +77,6 @@
             border-radius: 50%;
         }
 
-        /* === شريط التقدم === */
         #progress-bar {
             position: fixed; top: 0; left: 0; height: 3px;
             background: linear-gradient(90deg, var(--gold), var(--cyan), var(--purple));
@@ -87,7 +84,6 @@
             box-shadow: 0 0 15px var(--gold);
         }
 
-        /* === تأثير الظهور === */
         .reveal {
             opacity: 0;
             transform: translateY(60px) scale(0.95);
@@ -130,24 +126,14 @@
             font-size: 1.1rem; margin-bottom: 40px; line-height: 1.9; color: var(--text-muted); max-width: 550px;
         }
 
-        /* ========================================== */
-        /* === الأزرار (معدلة للموبايل) === */
-        /* ========================================== */
-        .btn-group { 
-            display: flex; 
-            gap: 15px; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-        }
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
         
         .btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             padding: 15px 30px; border-radius: 50px; text-decoration: none;
             font-weight: 700; font-size: 1rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer; border: none; position: relative; overflow: hidden;
-            letter-spacing: 1px;
-            flex: 1; /* ياخد مساحة متساوية */
-            min-width: 140px; /* أقل عرض عشان ميبقاش صغير أوي */
+            letter-spacing: 1px; flex: 1; min-width: 140px;
         }
         
         .btn-primary {
@@ -171,9 +157,6 @@
             transform: translateY(-5px) scale(1.02);
         }
 
-        /* ========================================== */
-        /* === الصورة الهولوجرام === */
-        /* ========================================== */
         .hero-image-container {
             flex: 0.8;
             display: flex; justify-content: center; align-items: center;
@@ -255,7 +238,88 @@
         }
 
         /* ========================================== */
-        /* === كروت الخدمات (Zero Gravity) === */
+        /* === قسم ليه تختارني (المفقود) === */
+        /* ========================================== */
+        .why-me-box {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 50px 40px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 30px rgba(255,215,0,0.05);
+        }
+
+        .why-me-box::before {
+            content: '"';
+            position: absolute;
+            top: 10px; right: 30px;
+            font-size: 120px;
+            color: var(--gold);
+            opacity: 0.08;
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .why-me-box p {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: #e0e0e0;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .why-me-box p span.highlight {
+            color: var(--gold);
+            font-weight: 900;
+            text-shadow: 0 0 15px var(--gold-dim);
+        }
+
+        .why-me-icons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .why-me-icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.4s ease;
+        }
+
+        .why-me-icon-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .why-me-icon-item i {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--gold), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px var(--gold-dim);
+            filter: drop-shadow(0 0 10px var(--gold-dim));
+        }
+
+        .why-me-icon-item span {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* ========================================== */
+        /* === كروت الخدمات === */
         /* ========================================== */
         .services-grid {
             display: grid;
@@ -640,7 +704,6 @@
             .stats-grid { gap: 30px; }
             .stat-item h3 { font-size: 2.5rem; }
             
-            /* ✅ الأزرار الأساسية في الموبايل */
             .btn-group {
                 flex-direction: column;
                 width: 100%;
@@ -662,9 +725,13 @@
             }
             
             .testimonials-grid { grid-template-columns: 1fr; }
+            
+            .why-me-box { padding: 35px 20px; }
+            .why-me-box p { font-size: 1.05rem; }
+            .why-me-icons { gap: 20px; }
+            .why-me-icon-item i { font-size: 2rem; }
         }
 
-        /* === للشاشات الصغيرة جداً === */
         @media (max-width: 400px) {
             .hero-text h1 { font-size: 2rem; }
             .btn { font-size: 0.95rem; padding: 14px 16px; }
@@ -705,7 +772,38 @@
     </header>
 
     <!-- ========================================== -->
-    <!-- 2. الخدمات -->
+    <!-- 2. ليه تختارني (القسم المفقود) -->
+    <!-- ========================================== -->
+    <section id="why-me">
+        <h2 class="section-title reveal">ليه تختارني <span style="color: var(--gold);">كشريك نجاح؟</span></h2>
+        <div class="why-me-box reveal">
+            <p>في عالم مليء بالضجيج، براندك مش محتاج مجرد إعلان.. محتاج <span class="highlight">"صوت" يوصله للصح</span>.</p>
+            <p>أنا مش بس بعمل حملات إعلانية، أنا بشتغل <span class="highlight">كشريك نجاح ليك</span>. فاهم إن كل فكرة في براندك هي استثمار، وعشان كده بشتغل بمنهجية <span class="highlight">"البيانات أولاً"</span> — بدرس جمهورك، بحلل منافسينك، وبصمم حملات مش بس بتجيب "لايكات"، لكن بتجيب <span class="highlight">عملاء حقيقيين</span> وبتزود أرباحك.</p>
+            <p>من 2022 وأنا بساعد براندات كتير تطلع من دائرة "المنافسة" لدائرة <span class="highlight">"الريادة"</span>. لو براندك جاهز يظهر بقوة تليق بفكرته، وتكون خطوته الجاية هي النمو.. فخليني أكون الراجل اللي بيقودك للخطوة دي.</p>
+            
+            <div class="why-me-icons">
+                <div class="why-me-icon-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>البيانات أولاً</span>
+                </div>
+                <div class="why-me-icon-item">
+                    <i class="fas fa-bullseye"></i>
+                    <span>استهداف دقيق</span>
+                </div>
+                <div class="why-me-icon-item">
+                    <i class="fas fa-handshake"></i>
+                    <span>شريك نجاح</span>
+                </div>
+                <div class="why-me-icon-item">
+                    <i class="fas fa-rocket"></i>
+                    <span>نمو حقيقي</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. الخدمات -->
     <!-- ========================================== -->
     <section id="services">
         <h2 class="section-title reveal">خدماتي الاحترافية</h2>
@@ -734,7 +832,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 3. مختبر الإعلانات -->
+    <!-- 4. مختبر الإعلانات -->
     <!-- ========================================== -->
     <section>
         <h2 class="section-title reveal">جرّب بنفسك.. سر الإعلان الناجح</h2>
@@ -774,7 +872,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 4. رادار العملاء -->
+    <!-- 5. رادار العملاء -->
     <!-- ========================================== -->
     <section>
         <h2 class="section-title reveal">اكتشف جمهورك المستهدف</h2>
@@ -805,7 +903,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 5. الأرقام والإحصائيات -->
+    <!-- 6. الأرقام والإحصائيات -->
     <!-- ========================================== -->
     <section style="padding: 0;">
         <div class="stats-grid reveal">
@@ -816,7 +914,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 6. آراء العملاء -->
+    <!-- 7. آراء العملاء -->
     <!-- ========================================== -->
     <section id="testimonials">
         <h2 class="section-title reveal">آراء <span style="color: var(--gold);">العملاء</span></h2>
@@ -868,7 +966,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 7. التواصل -->
+    <!-- 8. التواصل -->
     <!-- ========================================== -->
     <section id="contact">
         <div class="contact-section reveal">
@@ -901,7 +999,7 @@
         /* 1. مؤشر الماوس المخصص + الموجات الصوتية */
         /* ========================================== */
         const cursor = document.getElementById('customCursor');
-        const hoverElements = document.querySelectorAll('a, button, .glass-card, .btn, .lab-btn, .radar-btn, .testimonial-card');
+        const hoverElements = document.querySelectorAll('a, button, .glass-card, .btn, .lab-btn, .radar-btn, .testimonial-card, .why-me-icon-item');
 
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
